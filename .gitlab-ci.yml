@@ -38,9 +38,9 @@ unit-test:
 
 style-test:
   extends: .test
-  # allow_failure: true
+  allow_failure: true # temp using
   script:
-    - pylint --load-plugins=pylint_django app meeting  # file path
+    - pylint --load-plugins=pylint_django xxswl news  # file path
     - BACKEND_RET=$?
     - exit $BACKEND_RET
 
