@@ -7,6 +7,11 @@ The backend was bootstrapped with [`django-admin startproject app`](https://docs
 
 
 
+## 单元测试
+测试入口：各文件夹中的 tests.py 
+推荐各功能模块自己实现测试模块，例：新建 funcAtests.py （pytest写法），在此目录的 tests.py 中import  funcAtests。
+> 示例  https://gitlab.secoder.net/example/monolithic-example/-/blob/master/meeting/tests.py
+
 ## Comments for CI/CD
 
 > frame from: https://gitlab.secoder.net/example/monolithic-example
