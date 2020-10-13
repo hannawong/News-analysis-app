@@ -25,7 +25,6 @@ def message(request):
                     'title': msg.title,
                     'time': msg.time,
                     'author': msg.author,
-                    'publish_id': msg.publish_id,
                     'body':msg.body
                 }
                 for msg in Articles.objects.all().order_by('-pk')[int(offset) : int(offset) + int(limit)]
