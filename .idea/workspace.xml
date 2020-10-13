@@ -115,9 +115,9 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Django server.xxswl-backend" />
       <item itemvalue="Django tests.Test: xxswl.tests.TestMeetingEndpoint.test_get" />
       <item itemvalue="Python.webcrawler" />
+      <item itemvalue="Django server.xxswl-backend" />
     </list>
     <recent_temporary>
       <list>
@@ -136,7 +136,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1602554392873</updated>
-      <workItem from="1602554444320" duration="6953000" />
+      <workItem from="1602554444320" duration="7230000" />
     </task>
     <servers />
   </component>
