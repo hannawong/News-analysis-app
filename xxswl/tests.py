@@ -1,4 +1,4 @@
-'''
+
 from django.test import TestCase
 from news.models import Articles,WeiboHot
 class TestMeetingEndpoint(TestCase):
@@ -17,4 +17,3 @@ class TestMeetingEndpoint(TestCase):
         self.assertEqual(response.status_code, 200)
         print(response_data[0:40])
         self.assertEqual(response.json()['data'][0:40], response_data[0:40])
-'''
