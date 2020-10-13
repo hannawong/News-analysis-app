@@ -3,7 +3,7 @@ from django.db import models
 class Articles(models.Model):
     url=models.CharField(max_length=100)
     title=models.CharField(max_length=60)
-    time=models.DateTimeField()
+    time=models.CharField(max_length=15)
     author=models.CharField(max_length=15)
     body=models.CharField(max_length=1000)
     keywords=models.CharField(max_length=100,default="null")
