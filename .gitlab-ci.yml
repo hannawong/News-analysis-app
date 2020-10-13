@@ -2,7 +2,6 @@ image: registry.secoder.net/tool/deployer
 
 stages:
   - build
-  - test
   - deploy
 
 build:
