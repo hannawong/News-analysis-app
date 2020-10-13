@@ -3,25 +3,20 @@ Test suite for meeting
 '''
 
 from django.test import TestCase
-from news.models import Articles
+from news.models import Articles,WeiboHot
 class TestMeetingEndpoint(TestCase):
-    def setUp(self):
-        Articles.objects.create(url="", title="abc", time="2020-10-08 19:41:00",author="Alice",body="dfg")
-
     def test_get(self):
-        offset, limit = 0, 20
+        offset, limit = 0, 50
         response_data = [
                 {
-                    'url': msg.url,
+                    'id': msg.id,
                     'title': msg.title,
-                    'time': msg.time,
-                    'author': msg.author,
-                    'body':msg.body
+                    'hot': msg.hot
                 }
-                for msg in Articles.objects.all().order_by('-pk')[int(offset) : int(offset) + int(limit)]
+                for msg in WeiboHot.objects.all().order_by('-pk')[int(offset) : int(offset) + int(limit)]
             ]
         response = self.client.get("/news/index0")
         print(response.json()['data'])
         self.assertEqual(response.status_code, 200)
-        print(response_data)
-        self.assertEqual(response.json()['data'], response_data)
+        print(response_data[0:40])
+        self.assertEqual(response.json()['data'][0:40], response_data[0:40])

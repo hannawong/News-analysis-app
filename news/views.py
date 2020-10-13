@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import JsonResponse, HttpResponse
 import json
-from .models import Articles
+from .models import Articles,WeiboHot
 from django.core.exceptions import ValidationError
 
 def message(request):
@@ -21,12 +21,10 @@ def message(request):
             return gen_response(400, '{} is not a number'.format(offset))
         response= gen_response(200, [
                 {
-                    'url': msg.url,
-                    'title': msg.title,
-                    'time': msg.time,
-                    'author': msg.author,
-                    'body':msg.body
+                    'id':msg.id,
+                    'title':msg.title,
+                    'hot':msg.hot
                 }
-                for msg in Articles.objects.all().order_by('-pk')[int(offset) : int(offset) + int(limit)]
+                for msg in WeiboHot.objects.all().order_by('-pk')[int(offset) : int(offset) + int(limit)]
             ])
         return response

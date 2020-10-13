@@ -25,10 +25,13 @@ def crawler_weibo_hot(): ####抓取50条微博热搜，作为“热点榜单”�
         id += 1
         hot.title = match.group("title")
         hot.hot = match.group("hot")
-        hot.save()
-        print("写入微博热搜")
+        try:
+            hot.clean()
+            hot.save()
+            print("写入微博热搜")
+        except:
+            print("写入失败")
 crawler_weibo_hot()
-
 
 #########################爬取新浪滚动新闻##################################
 delta_time = 60*60##每隔30s爬取一次，增量存储。最终运行时可调为60*60
@@ -102,6 +105,9 @@ def news_crawler():  #####爬取50个首页新闻(已实现增量爬取,已实�
 #crawler_weibo_hot()
 #info=News.objects.filter()
 #info.delete()
+
+'''
 while 1:   #一直不停的爬取
     news_crawler()
     time.sleep(delta_time)
+'''
