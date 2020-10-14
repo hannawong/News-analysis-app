@@ -5,13 +5,14 @@
 ###已完成增量爬取
 import sys
 print(sys.path)
-sys.path.append("/home/ubuntu/xxswl-prj/xxswl/")
+sys.path.append("/home/ubuntu/xxswl-backend/")
 import re
 import time
 import requests
 import pandas as pd
 import jieba
-from news.models import Articles,WeiboHot
+from news.models import Articles
+from news.models import WeiboHot
 
 
 def crawler_weibo_hot(): ####抓取50条微博热搜，作为“热点榜单”来展示
@@ -35,7 +36,7 @@ def crawler_weibo_hot(): ####抓取50条微博热搜，作为“热点榜单”�
 #crawler_weibo_hot()
 
 #########################爬取新浪滚动新闻##################################
-delta_time = 60*60##每隔30s爬取一次，增量存储。最终运行时可调为60*60
+delta_time = 60*60*3##每隔30s爬取一次，增量存储。最终运行时可调为60*60
 IDF_contains_doc={}
 def news_crawler():  #####爬取50个首页新闻(已实现增量爬取,已实现数据库存储)#####
     global IDF_contains_doc
@@ -126,4 +127,4 @@ def news_crawler():  #####爬取50个首页新闻(已实现增量爬取,已实�
 
 while 1:   #一直不停的爬取
     news_crawler()
-    time.sleep(30)
+    time.sleep(delta_time)
