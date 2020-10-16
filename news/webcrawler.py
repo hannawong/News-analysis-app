@@ -34,7 +34,7 @@ def crawler_weibo_hot(): ####抓取50条微博热搜，作为“热点榜单”�
 #crawler_weibo_hot()
 
 #########################爬取新浪滚动新闻##################################
-delta_time = 60*60*8##每隔30s爬取一次，增量存储。最终运行时可调为60*60
+delta_time = 60*60##每隔30s爬取一次，增量存储。最终运行时可调为60*60
 IDF_contains_doc={}
 def news_crawler():  #####爬取50个首页新闻(已实现增量爬取,已实现数据库存储)#####
     global IDF_contains_doc
@@ -103,23 +103,6 @@ def news_crawler():  #####爬取50个首页新闻(已实现增量爬取,已实�
             news.publish_id = publish_id
             news.body=body
             doc_num += 1
-            '''
-            word_dic = {}  #一篇文章的词语对应的次数
-            tot_word = 0  #一篇文章的总词数
-            body=re.sub(r"[^\u4e00-\u9fa5]","",body)
-            splitted=list(jieba.cut(body))
-            for i in set(splitted):
-                if(i in IDF_contains_doc.keys()):
-                    IDF_contains_doc[i]+=1
-                else:
-                    IDF_contains_doc[i]=1
-            for i in splitted:
-                if i in word_dic.keys():
-                    word_dic[i]+=1
-                else:
-                    word_dic[i]=1
-            print(IDF_contains_doc)
-            '''
             news.save()
             print("写入数据库成功")
 

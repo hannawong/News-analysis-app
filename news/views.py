@@ -3,6 +3,7 @@ from django.http import JsonResponse, HttpResponse
 import json
 import re
 import jieba
+print(jieba.__version__)
 from .models import Articles,WeiboHot
 from django.core.exceptions import ValidationError
 
