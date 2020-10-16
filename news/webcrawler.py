@@ -16,6 +16,7 @@ from news.models import WeiboHot
 
 
 def crawler_weibo_hot(): ####抓取50条微博热搜，作为“热点榜单”来展示
+    WeiboHot.objects.all().delete()
     url = 'https://s.weibo.com/top/summary/summary?cate=realtimehot'
     strhtml = requests.get(url).text
     pattern0 = r"<a href=(?P<url>.*Refer=.*)target=.*>(?P<title>.*)</a>\n.*<span>(?P<hot>\d*)</span>"
