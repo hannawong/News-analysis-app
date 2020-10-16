@@ -54,7 +54,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.webcrawler">
+  <component name="RunManager" selected="Django tests.Test: xxswl.tests.TestMeetingEndpoint.test_get_wordcloud">
     <configuration name="Test: xxswl.tests.TestMeetingEndpoint.test_get" type="DjangoTestsConfigurationType" temporary="true">
       <module name="xxswl-backend" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -69,6 +69,26 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="TARGET" value="xxswl.tests.TestMeetingEndpoint.test_get" />
+      <option name="SETTINGS_FILE" value="" />
+      <option name="CUSTOM_SETTINGS" value="false" />
+      <option name="USE_OPTIONS" value="false" />
+      <option name="OPTIONS" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Test: xxswl.tests.TestMeetingEndpoint.test_get_wordcloud" type="DjangoTestsConfigurationType" temporary="true">
+      <module name="xxswl-backend" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="TARGET" value="xxswl.tests.TestMeetingEndpoint.test_get_wordcloud" />
       <option name="SETTINGS_FILE" value="" />
       <option name="CUSTOM_SETTINGS" value="false" />
       <option name="USE_OPTIONS" value="false" />
@@ -141,29 +161,6 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="webcrawler" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="xxswl-backend" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-        <env name="DJANGO_SETTINGS_MODULE" value="xxswl.settings" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/news" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/news/webcrawler.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
     <configuration name="xxswl-backend" type="Python.DjangoServer" factoryName="Django server">
       <module name="xxswl-backend" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -189,19 +186,19 @@
     </configuration>
     <list>
       <item itemvalue="Django server.xxswl-backend" />
-      <item itemvalue="Django tests.Test: xxswl.tests.TestMeetingEndpoint.test_get" />
-      <item itemvalue="Python.webcrawler" />
       <item itemvalue="Python.keywords" />
       <item itemvalue="Python.IDF_dic" />
       <item itemvalue="Python.first_cluster" />
+      <item itemvalue="Django tests.Test: xxswl.tests.TestMeetingEndpoint.test_get_wordcloud" />
+      <item itemvalue="Django tests.Test: xxswl.tests.TestMeetingEndpoint.test_get" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.webcrawler" />
-        <item itemvalue="Python.keywords" />
+        <item itemvalue="Django tests.Test: xxswl.tests.TestMeetingEndpoint.test_get_wordcloud" />
+        <item itemvalue="Django tests.Test: xxswl.tests.TestMeetingEndpoint.test_get" />
         <item itemvalue="Python.IDF_dic" />
         <item itemvalue="Python.first_cluster" />
-        <item itemvalue="Django tests.Test: xxswl.tests.TestMeetingEndpoint.test_get" />
+        <item itemvalue="Python.keywords" />
       </list>
     </recent_temporary>
   </component>
@@ -217,7 +214,7 @@
       <updated>1602554392873</updated>
       <workItem from="1602554444320" duration="11766000" />
       <workItem from="1602584697149" duration="14424000" />
-      <workItem from="1602737939115" duration="5948000" />
+      <workItem from="1602737939115" duration="9105000" />
     </task>
     <servers />
   </component>
@@ -238,10 +235,11 @@
     </option>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/xxswl_backend$first_cluster.coverage" NAME="first_cluster Coverage Results" MODIFIED="1602594197792" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/news/cluster" />
-    <SUITE FILE_PATH="coverage/xxswl_backend$IDF_dic.coverage" NAME="IDF_dic Coverage Results" MODIFIED="1602644566703" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/news/cluster" />
-    <SUITE FILE_PATH="coverage/xxswl_backend$keywords.coverage" NAME="keywords Coverage Results" MODIFIED="1602644608248" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/news/cluster" />
+    <SUITE FILE_PATH="coverage/xxswl_backend$first_cluster.coverage" NAME="first_cluster Coverage Results" MODIFIED="1602817864558" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/news/cluster" />
+    <SUITE FILE_PATH="coverage/xxswl_backend$IDF_dic.coverage" NAME="IDF_dic Coverage Results" MODIFIED="1602817943904" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/news/cluster" />
+    <SUITE FILE_PATH="coverage/xxswl_backend$Test__xxswl_tests_TestMeetingEndpoint_test_get_wordcloud.coverage" NAME="Test: xxswl.tests.TestMeetingEndpoint.test_get_wordcloud Coverage Results" MODIFIED="1602823387020" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/xxswl_backend$keywords.coverage" NAME="keywords Coverage Results" MODIFIED="1602817507951" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/news/cluster" />
     <SUITE FILE_PATH="coverage/xxswl_backend$webcrawler.coverage" NAME="webcrawler Coverage Results" MODIFIED="1602817196380" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/news" />
-    <SUITE FILE_PATH="coverage/xxswl_backend$Test__xxswl_tests_TestMeetingEndpoint_test_get.coverage" NAME="Test: xxswl.tests.TestMeetingEndpoint.test_get Coverage Results" MODIFIED="1602556556834" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/xxswl_backend$Test__xxswl_tests_TestMeetingEndpoint_test_get.coverage" NAME="Test: xxswl.tests.TestMeetingEndpoint.test_get Coverage Results" MODIFIED="1602823005044" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
   </component>
 </project>

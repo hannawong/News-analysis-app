@@ -18,3 +18,6 @@ class TestMeetingEndpoint(TestCase):
         self.assertEqual(response.status_code, 200)
         print(response_data[0:40])
         self.assertEqual(response.json()['data'][0:40], response_data[0:40])
+    def test_get_wordcloud(self):
+        response = self.client.get("/news/wordcloud")
+        print(response.json())

@@ -5,6 +5,12 @@ import re
 import numpy
 import json
 
+import sys
+print(sys.path)
+sys.path.append("/home/ubuntu/xxswl-backend/")
+import os,django
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "xxswl.settings")# project_name 项目名称
+django.setup()
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.cluster import KMeans
 import sys
@@ -42,5 +48,4 @@ def assign():
         print(article.keywords,result[i])
         article.cluster_id=result[i]
         article.save()
-
 assign()
