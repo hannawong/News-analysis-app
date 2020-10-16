@@ -18,7 +18,7 @@ from news.models import WeiboHot
 def crawler_weibo_hot(): ####抓取50条微博热搜，作为“热点榜单”来展示
     url = 'https://s.weibo.com/top/summary/summary?cate=realtimehot'
     strhtml = requests.get(url).text
-    pattern0 = r"<a href=(?P<url>.*Refer=.*)target=.*>(?P<title>.*)</a>\n.*<span>(?P<hot>\d*)</span>"
+    pattern0 = r"<a href=.*Refer=.*target=.*>(?P<title>.*)</a>\n.*<span>(?P<hot>\d*)</span>"
     it = re.finditer(pattern0, strhtml)
     id = 0
     for match in it:
@@ -27,13 +27,16 @@ def crawler_weibo_hot(): ####抓取50条微博热搜，作为“热点榜单”�
         id += 1
         hot.title = match.group("title")
         hot.hot = match.group("hot")
-        hot.title+="@"+str("s.weibo.com"+match.group("url")[1:-2])
-        hot.save()
-        print("写入微博热搜")
-crawler_weibo_hot()
+        try:
+            hot.clean()
+            hot.save()
+            print("写入微博热搜")
+        except:
+            print("写入失败")
+#crawler_weibo_hot()
 
 #########################爬取新浪滚动新闻##################################
-delta_time = 60*60*3##每隔30s爬取一次，增量存储。最终运行时可调为60*60
+delta_time = 60*60##每隔30s爬取一次，增量存储。最终运行时可调为60*60
 IDF_contains_doc={}
 def news_crawler():  #####爬取50个首页新闻(已实现增量爬取,已实现数据库存储)#####
     global IDF_contains_doc
@@ -121,8 +124,7 @@ def news_crawler():  #####爬取50个首页新闻(已实现增量爬取,已实�
             '''
             news.save()
             print("写入数据库成功")
-'''
+
 while 1:   #一直不停的爬取
     news_crawler()
-    time.sleep(delta_time)
-'''
+    time.sleep(30)

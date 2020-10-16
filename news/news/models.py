@@ -11,7 +11,7 @@ class Articles(models.Model):
 
 class WeiboHot(models.Model):
     id=models.IntegerField(primary_key=True)
-    title=models.CharField(max_length=300)
+    title=models.CharField(max_length=100)
     hot=models.IntegerField()
 
     def __str__(self):

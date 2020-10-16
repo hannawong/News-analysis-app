@@ -40,7 +40,7 @@
   <component name="ProjectId" id="1inrqx6mw3UegXO3it06jWXQ81v" />
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../xxswl/xxswl-backend" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../messageboard" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -54,7 +54,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.keywords">
+  <component name="RunManager" selected="Python.webcrawler">
     <configuration name="Test: xxswl.tests.TestMeetingEndpoint.test_get" type="DjangoTestsConfigurationType" temporary="true">
       <module name="xxswl-backend" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -197,10 +197,10 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.webcrawler" />
         <item itemvalue="Python.keywords" />
         <item itemvalue="Python.IDF_dic" />
         <item itemvalue="Python.first_cluster" />
-        <item itemvalue="Python.webcrawler" />
         <item itemvalue="Django tests.Test: xxswl.tests.TestMeetingEndpoint.test_get" />
       </list>
     </recent_temporary>
@@ -216,7 +216,8 @@
       <option name="presentableId" value="Default" />
       <updated>1602554392873</updated>
       <workItem from="1602554444320" duration="11766000" />
-      <workItem from="1602584697149" duration="11498000" />
+      <workItem from="1602584697149" duration="14424000" />
+      <workItem from="1602737939115" duration="4136000" />
     </task>
     <servers />
   </component>
@@ -240,7 +241,7 @@
     <SUITE FILE_PATH="coverage/xxswl_backend$first_cluster.coverage" NAME="first_cluster Coverage Results" MODIFIED="1602594197792" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/news/cluster" />
     <SUITE FILE_PATH="coverage/xxswl_backend$IDF_dic.coverage" NAME="IDF_dic Coverage Results" MODIFIED="1602644566703" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/news/cluster" />
     <SUITE FILE_PATH="coverage/xxswl_backend$keywords.coverage" NAME="keywords Coverage Results" MODIFIED="1602644608248" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/news/cluster" />
-    <SUITE FILE_PATH="coverage/xxswl_backend$webcrawler.coverage" NAME="webcrawler Coverage Results" MODIFIED="1602591731042" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/news" />
+    <SUITE FILE_PATH="coverage/xxswl_backend$webcrawler.coverage" NAME="webcrawler Coverage Results" MODIFIED="1602815222669" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/news" />
     <SUITE FILE_PATH="coverage/xxswl_backend$Test__xxswl_tests_TestMeetingEndpoint_test_get.coverage" NAME="Test: xxswl.tests.TestMeetingEndpoint.test_get Coverage Results" MODIFIED="1602556556834" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
   </component>
 </project>

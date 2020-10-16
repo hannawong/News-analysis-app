@@ -22,9 +22,8 @@ def message(request):
         response= gen_response(200, [
                 {
                     'id':msg.id,
-                    'title':msg.title.split("@")[0],
-                    'hot':msg.hot,
-                    'url':msg.title.split("@")[1]
+                    'title':msg.title,
+                    'hot':msg.hot
                 }
                 for msg in WeiboHot.objects.all().order_by('-pk')[int(offset) : int(offset) + int(limit)]
             ])

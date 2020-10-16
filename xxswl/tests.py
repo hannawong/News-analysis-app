@@ -7,8 +7,9 @@ class TestMeetingEndpoint(TestCase):
         response_data = [
                 {
                     'id': msg.id,
-                    'title': msg.title,
-                    'hot': msg.hot
+                    'title': msg.title.split("@")[0],
+                    'hot': msg.hot,
+                    'url':msg.title.split('@')[1]
                 }
                 for msg in WeiboHot.objects.all().order_by('-pk')[int(offset) : int(offset) + int(limit)]
             ]
