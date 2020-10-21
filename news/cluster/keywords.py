@@ -1,13 +1,22 @@
 #################计算新加进来的文章的关键词##################
-from news.models import Articles
+
 import jieba
 import re
 import numpy
 import json
+
+
+import sys
+sys.path.append("/home/ubuntu/xxswl-backend/")
+import os,django
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "xxswl.settings")# project_name 项目名称
+django.setup()
+
+from news.models import Articles
 sina_rollnews = Articles.objects.filter()
 doc_num=len(sina_rollnews)  #文档总数
 print(doc_num,"条新闻")
-file=open("data\\IDF_doc_word.json",'r',encoding="utf-8")
+file=open("IDF_doc_word.json",'r',encoding="utf-8")
 IDF_doc_word=json.load(file)
 print(IDF_doc_word)
 for article in sina_rollnews:

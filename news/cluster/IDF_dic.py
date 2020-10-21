@@ -1,13 +1,22 @@
 ##########处理数据库中新加进来的文章，更新IDF_doc_word###########
-from news.models import Articles
+
 import jieba
 import re
 import numpy
 import json
+
+import sys
+sys.path.append("/home/ubuntu/xxswl-backend/")
+import os,django
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "xxswl.settings")# project_name 项目名称
+django.setup()
+
+
+from news.models import Articles
 sina_rollnews = Articles.objects.filter()
 doc_num=len(sina_rollnews)  #文档总数
 print(doc_num,"条新闻")
-file=open("data\\IDF_doc_word.json",'r',encoding="utf-8")
+file=open("IDF_doc_word.json",'r',encoding="utf-8")
 IDF_doc_word=json.load(file)
 for article in sina_rollnews:
     keyword=article.keywords
@@ -30,7 +39,7 @@ for article in sina_rollnews:
                 IDF_doc_word[word]+=1
             else:
                 IDF_doc_word[word]=1
-out=open("data\\IDF_doc_word.json",'w',encoding='utf-8')
+out=open("IDF_doc_word.json",'w',encoding='utf-8')
 json.dump(IDF_doc_word,out)
 
 
