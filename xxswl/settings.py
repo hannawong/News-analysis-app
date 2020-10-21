@@ -25,7 +25,7 @@ SECRET_KEY = '^0#hsqskh^zhfmi5##s$6!h!1448-%!(@a-!l22byli+rh(utm'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["testserver"]
+ALLOWED_HOSTS = ["testserver","0.0.0.0"]
 
 
 # Application definition
@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'news.apps.NewsConfig',
+    'heatmap.apps.HeatmapConfig',
 ]
 
 MIDDLEWARE = [
