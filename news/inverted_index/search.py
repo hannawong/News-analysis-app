@@ -2,7 +2,6 @@ import json
 import time
 import sys
 import numpy
-print(sys.path)
 sys.path.append("/home/ubuntu/xxswl-backend/")
 import os,django
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "xxswl.settings")# project_name 项目名称
@@ -49,7 +48,7 @@ def search(keyword: str, starttime,endtime):
             ans_list.append({"title":article.title, "time":to_timestamp(article.time), "body":article.body})
     return ans_list
 
-anslist=search("新冠",0,16028635350000)
+#anslist=search("新冠",0,16028635350000)
 
 
 stopwords=["责任编辑","这个","今日","万","亿","一","二","三","四","五","六","七","八","九","十","应当","京报","日","月","就是","因为","自己","现在"]
