@@ -10,8 +10,8 @@ django.setup()
 
 from news.models import Articles
 
-f=open("inverted_index_cluster.json",'r',encoding="utf-8")
-f1=open("inverted_index_article.json",'r',encoding="utf-8")
+f=open("news/inverted_index/inverted_index_cluster.json",'r',encoding="utf-8")
+f1=open("news/inverted_index/inverted_index_article.json",'r',encoding="utf-8")
 inverted_index_cluster=json.load(f)
 inverted_index_article=json.load(f1)
 
@@ -24,6 +24,8 @@ def to_timestamp(strtime:str): ###将字符串时间"2020-05-03 12:01:54"转成�
 
 def search(keyword: str, starttime,endtime):
     #热点演进: 输入关键词，返回和这个关键词有关的新闻列表
+    starttime = int(starttime)
+    endtime = int(endtime)
     ans_list = []
     dic_cluster = inverted_index_cluster[keyword]
     dic_article = inverted_index_article[keyword]
@@ -42,10 +44,10 @@ def search(keyword: str, starttime,endtime):
             ans_list.append({"title":article.title, "time":to_timestamp(article.time), "body":article.body})
     return ans_list
 
-anslist=search("澳洲",0,16028635350000)
-print(anslist)
+#anslist=search("澳洲",0,16028635350000)
+#print(anslist)
 
-stopwords=["责任编辑","这个","今日","万","亿","一","二","三","四","五","六","七","八","九","十","应当","京报","日","月"]
+stopwords=["责任编辑","这个","今日","万","亿","一","二","三","四","五","六","七","八","九","十","应当","京报","日","月","就是","因为","自己","现在"]
 def stop(str):
     for word in stopwords:
         if word in str:
@@ -54,6 +56,8 @@ def stop(str):
 
 def wordcloud(cluster_id,topk):
     ###########取cluster_id聚类簇里面的关键词；取前topk个tfidf值最大的。
+    cluster_id=int(cluster_id)
+    topk=int(topk)
     word_dic = {}              ####词频
     tfidf_dic = {}             ####tfidf值
     for word in inverted_index_cluster.keys():
@@ -73,4 +77,4 @@ def wordcloud(cluster_id,topk):
     return ans_dic
 
 
-print(wordcloud(19,40))
+#print(wordcloud(19,40))
