@@ -1,12 +1,13 @@
 import json
-import datetime
 import time
-import re,jieba
-import sys,numpy
+import sys
+import numpy
+print(sys.path)
 sys.path.append("/home/ubuntu/xxswl-backend/")
 import os,django
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "xxswl.settings")# project_name 项目名称
 django.setup()
+
 
 from news.models import Articles
 
@@ -22,11 +23,15 @@ def to_timestamp(strtime:str): ###将字符串时间"2020-05-03 12:01:54"转成�
     timestamp = int(time.mktime(timearray))
     return timestamp
 
+
+
 def search(keyword: str, starttime,endtime):
     #热点演进: 输入关键词，返回和这个关键词有关的新闻列表
     starttime = int(starttime)
     endtime = int(endtime)
     ans_list = []
+    if(keyword not in inverted_index_cluster.keys() or keyword not in inverted_index_article.keys()):
+        return []
     dic_cluster = inverted_index_cluster[keyword]
     dic_article = inverted_index_article[keyword]
     print(dic_article)
@@ -44,8 +49,8 @@ def search(keyword: str, starttime,endtime):
             ans_list.append({"title":article.title, "time":to_timestamp(article.time), "body":article.body})
     return ans_list
 
-#anslist=search("澳洲",0,16028635350000)
-#print(anslist)
+anslist=search("新冠",0,16028635350000)
+
 
 stopwords=["责任编辑","这个","今日","万","亿","一","二","三","四","五","六","七","八","九","十","应当","京报","日","月","就是","因为","自己","现在"]
 def stop(str):
@@ -58,7 +63,6 @@ def wordcloud(cluster_id,topk):
     ###########取cluster_id聚类簇里面的关键词；取前topk个tfidf值最大的。
     cluster_id=int(cluster_id)
     topk=int(topk)
-    word_dic = {}              ####词频
     tfidf_dic = {}             ####tfidf值
     for word in inverted_index_cluster.keys():
         if(len(word) == 1 or stop(word)):

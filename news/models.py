@@ -8,6 +8,8 @@ class Articles(models.Model):
     body=models.CharField(max_length=1000)
     keywords=models.CharField(max_length=300,default="null")
     cluster_id=models.IntegerField(default=-1)
+    emotion=models.FloatField(default=0.0)
+
 
 class WeiboHot(models.Model):
     id=models.IntegerField(primary_key=True)

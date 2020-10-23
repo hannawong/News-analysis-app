@@ -1,4 +1,5 @@
 #################计算新加进来的文章的关键词##################
+#################计算正负情感################
 
 import jieba
 import re
@@ -13,12 +14,13 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "xxswl.settings")# project_name 
 django.setup()
 
 from news.models import Articles
+
 sina_rollnews = Articles.objects.filter()
 doc_num=len(sina_rollnews)  #文档总数
 print(doc_num,"条新闻")
 file=open("IDF_doc_word.json",'r',encoding="utf-8")
 IDF_doc_word=json.load(file)
-print(IDF_doc_word)
+
 for article in sina_rollnews:
     keyword=article.keywords
     if keyword=="null":   #新的文章
@@ -45,17 +47,6 @@ for article in sina_rollnews:
         for l in L:
             keyword+=l[0]+","
         article.keywords=keyword[:-1]
-        article.save()
-        '''
-        for word in set(seg_word):
-            if(word in IDF_doc_word.keys()):
-                IDF_doc_word[word]+=1
-            else:
-                IDF_doc_word[word]=1
-        '''
-'''
-out=open("data\\IDF_doc_word.json",'w',encoding='utf-8')
-json.dump(IDF_doc_word,out)
-'''
+    article.save()
 
 
