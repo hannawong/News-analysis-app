@@ -5,8 +5,6 @@ import re
 import jieba
 from .models import Articles,WeiboHot
 from django.core.exceptions import ValidationError
-f=open("..\\cluster\\inverted_index.json")
-inverted_index=json.load(f)
 def message(request):
     def gen_response(code: int, data):
         return JsonResponse({
@@ -53,8 +51,6 @@ def GetWordcloud(request,cluster_id,topk):  ###词云API
                     word_dic[word]+=1
                 else:
                     word_dic[word]=1
-            for word in word_dic.keys():
-
         L = sorted(word_dic.items(), key=lambda item: item[1], reverse=True)
         L = L[:int(topk)]
         dic={}

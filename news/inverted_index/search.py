@@ -15,10 +15,9 @@ def to_timestamp(strtime:str): ###将字符串时间"2020-05-03 12:01:54"转成�
     timearray = time.strptime(strtime, '%Y-%m-%d %H:%M:%S')
     timestamp = int(time.mktime(timearray))
     return timestamp
-
-f=open("inverted_index.json",'r',encoding="utf-8")
+f=open("inverted_index_cluster.json",'r',encoding="utf-8")
 inverted_index=json.load(f)
-stopwords=["记者","责任编辑","标题","报道","京报"]
+
 
 def search(keyword: str, starttime,endtime):  #热点演进
     ans_list=[]
