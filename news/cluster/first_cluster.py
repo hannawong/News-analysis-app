@@ -34,8 +34,8 @@ def cluster():
 
     tfidf_matrix = tfidf_vectorizer.fit_transform(text_list)
     print("tf_idf===============================", tfidf_matrix)
-    num_clusters = 100
-    km_cluster = KMeans(n_clusters=num_clusters, max_iter=10000, n_init=5)
+    num_clusters = 50
+    km_cluster = KMeans(n_clusters=num_clusters, max_iter=500, n_init=5)
     result = km_cluster.fit_predict(tfidf_matrix)
     numpy.save("result", result)
     print(result)

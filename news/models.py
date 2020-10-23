@@ -6,7 +6,7 @@ class Articles(models.Model):
     time=models.CharField(max_length=15)
     author=models.CharField(max_length=15)
     body=models.CharField(max_length=1000)
-    keywords=models.CharField(max_length=100,default="null")
+    keywords=models.CharField(max_length=300,default="null")
     cluster_id=models.IntegerField(default=-1)
 
 class WeiboHot(models.Model):
