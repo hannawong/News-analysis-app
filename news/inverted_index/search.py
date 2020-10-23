@@ -15,6 +15,8 @@ f1=open("inverted_index_article.json",'r',encoding="utf-8")
 inverted_index_cluster=json.load(f)
 inverted_index_article=json.load(f1)
 
+cluster_num=50
+
 def to_timestamp(strtime:str): ###将字符串时间"2020-05-03 12:01:54"转成时间戳
     timearray = time.strptime(strtime, '%Y-%m-%d %H:%M:%S')
     timestamp = int(time.mktime(timearray))
@@ -34,34 +36,41 @@ def search(keyword: str, starttime,endtime):
             continue
         ttime = article.time
         if(starttime<to_timestamp(ttime) and to_timestamp(ttime)<endtime):  #时间比对
-            print(article.id,article.cluster_id,article.title, article.time)
+            if(len(ans_list) != 0 and article.title == ans_list[-1]["title"]):  ###去重
+                continue
+            print(article.id, article.cluster_id, article.title, article.time)
             ans_list.append({"title":article.title, "time":to_timestamp(article.time), "body":article.body})
     return ans_list
 
-anslist=search("疫苗",0,16028635350000)
+anslist=search("澳洲",0,16028635350000)
 print(anslist)
 
+stopwords=["责任编辑","这个","今日","万","亿","一","二","三","四","五","六","七","八","九","十","应当","京报","日","月"]
+def stop(str):
+    for word in stopwords:
+        if word in str:
+            return True
+    return False
+
 def wordcloud(cluster_id,topk):
-    word_dic = {}  ####词频
-    tfidf_dic = {}
-    tot_num=0
-    for news in Articles.objects.filter(cluster_id=cluster_id).order_by('-pk'):
-        text = news.title + " " + news.body
-        text = re.sub(r"[^\u4e00-\u9fa5]", "", text)
-        seg_word = list(jieba.cut(text))
-        for word in seg_word:
-            if (len(word) == 1 or word not in inverted_index.keys() or word in stopwords):
+    ###########取cluster_id聚类簇里面的关键词；取前topk个tfidf值最大的。
+    word_dic = {}              ####词频
+    tfidf_dic = {}             ####tfidf值
+    for word in inverted_index_cluster.keys():
+        if(len(word) == 1 or stop(word)):
+            continue
+        cluster_freq_dic=inverted_index_cluster[word]  ####这个词语在不同聚类中出现的次数
+        if(str(cluster_id) in cluster_freq_dic):  #该词语出现在cluster_id簇中
+            if(len(cluster_freq_dic)>=cluster_num/3):
                 continue
-            if (word in word_dic.keys()):
-                word_dic[word] += 1
-            else:
-                word_dic[word] = 1
-            tot_num+=1
-        for word in word_dic:
-            tfidf_dic[word]=word_dic[word]*numpy.log10(50.0/len(inverted_index[word]))
+
+            tfidf_dic[word]=cluster_freq_dic[str(cluster_id)]*numpy.log2(cluster_num/len(cluster_freq_dic))
     L = sorted(tfidf_dic.items(), key=lambda item: item[1], reverse=True)
-    L = L[:int(topk)]
-    dic = {}
+    L = L[:topk]
+    ans_dic={}
     for l in L:
-        dic[l[0].encode("utf-8").decode("utf-8")] = l[1]
-    print(dic)
+        ans_dic[l[0]]=int(l[1])
+    return ans_dic
+
+
+print(wordcloud(19,40))
