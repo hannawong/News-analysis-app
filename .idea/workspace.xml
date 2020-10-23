@@ -192,12 +192,20 @@
       <method v="2" />
     </configuration>
     <list>
+      <item itemvalue="Python.invert_index (1)" />
+      <item itemvalue="Python.keywords" />
+      <item itemvalue="Python.search (1)" />
+      <item itemvalue="Python.search" />
+      <item itemvalue="Python.views" />
       <item itemvalue="Django server.xxswl-backend" />
+<<<<<<< HEAD
       <item itemvalue="Python.views" />
       <item itemvalue="Python.search" />
       <item itemvalue="Python.search (1)" />
       <item itemvalue="Python.invert_index (1)" />
       <item itemvalue="Python.keywords" />
+=======
+>>>>>>> test
     </list>
     <recent_temporary>
       <list>
@@ -223,7 +231,11 @@
       <workItem from="1602584697149" duration="14424000" />
       <workItem from="1602737939115" duration="18719000" />
       <workItem from="1603273955418" duration="3103000" />
+<<<<<<< HEAD
       <workItem from="1603348282526" duration="28643000" />
+=======
+      <workItem from="1603348282526" duration="28211000" />
+>>>>>>> test
     </task>
     <servers />
   </component>

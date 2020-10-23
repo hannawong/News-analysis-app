@@ -4,3 +4,4 @@ from news import models
 
 #Register models
 admin.site.register(models.Articles)
+admin.site.register(models.WeiboHot)
