@@ -2,7 +2,8 @@
 # -*- coding: UTF-8 -*-
 
 """
-heatmapData:[{lng: 116.191031, lat: 39.988585, count: 98} , ......] 双引号的json格式 数据范围、in中国[不提供审查,大约为：经度lng 73.66至135.05,纬度lat 3.86至53.55] count大约0--100
+heatmapData:[{lng: 116.191031, lat: 39.988585, count: 98} , ......]
+双引号的json格式 数据范围、in中国[不提供审查,大约为：经度lng 73.66至135.05,纬度lat 3.86至53.55] count大约0--100
 中国城市和经纬度的对应表 echarts-china-cities-pypkg，echarts-china-provinces-pypkg
 如果只到省级 显示省会； 看起来是到不了区了？
 
@@ -16,13 +17,24 @@ heatmapData:[{lng: 116.191031, lat: 39.988585, count: 98} , ......] 双引�
  2-时间：[begin, end]  default=yesterday? 不同截止日期查询结果不同，可以显示趋势
 
 
-lnglat = {}
-# {('北京市', '', ''): (116.39564503787867, 39.92998577808024), ('北京市', '北京市', ''): (116.39564503787867, 39.92998577808024), ('北京市', '北京市', '东城区'): (116.42188470126446, 39.93857401298612)}
+lnglat
+# {('北京市', '', ''): (116.39564503787867, 39.92998577808024),
+ ('北京市', '北京市', ''): (116.39564503787867, 39.92998577808024),
+ ('北京市', '北京市', '东城区'): (116.42188470126446, 39.93857401298612)}
 
 # 数据约定:国家直辖市的sheng字段为直辖市名称, 省直辖县的city字段为空
+todo 看地点提取结果而定？--may 改cvs 省级经纬==省会经纬  重复值处理—丢弃省份or存入时即处理？ 目前只能丢弃省份 or 改数据库 
 
 """
 import re
+from heatmap.data.lnglatDict import lnglat
+from chinese_province_city_area_mapper.transformer import CPCATransformer
+
+# (省名, 市名, 区名) -> 出现次数
+from collections import Counter
+
+locationCounter = Counter()  # ('北京市', '北京市', ''): 1, ('北京市', '北京市', '东城区'): 1} # they are different locations
+
 punctuationPattern = r',|\.|/|;|\'|`|\[|\]|<|>|\?|:|"|\{|\}|\~|!|@|#|\$|%|\^|&|\(|\)|-|=|\_|\+|，|。|、|；|【|】|·|！| |…|（|）|‘|’|“|”'
 
 
@@ -42,49 +54,44 @@ class DotData:
         return {"lng": self.lng, "lat": self.lat, "count": self.count}
 
 
-text1 = "云南封禁be，北京好嘛在三峡骑行，北京好嘛在三峡骑行，北京好嘛在三峡骑行，北京好嘛在三峡骑行，他第一次感受到，‘郦道元’“东三峡巫峡长，猿鸣三声泪沾裳”原来就是这样的景致。在南京，为了坐上人生第一次渡轮，他在码头长凳上过夜。在凉都利川，他发现9月暑天早晨的气温可以低到14度，冻得他用衣服包起了手。"
+text1 = "云南封禁be，北京好嘛在三峡骑行，北京好嘛在三峡骑行，北京好嘛在三峡骑行，北京好嘛在三峡骑行，他第一次感受到，‘郦道元’“东三峡巫峡长，猿鸣三声泪沾裳”原来就是这样的景致。在南京，为了坐上人生第一次渡轮，他在码头长凳上过夜。在凉都利川，他发现9月暑天早晨的气温可以低到14度，冻得他用衣服包起了手。 "
 
-
-# (省名, 市名, 区名) -> (经度，纬度)
-lnglat = {}
-def loadLnglatDict() :
-    import csv
-    with open('pca.csv', 'r', encoding='utf8') as f:
-        pca_csv = csv.DictReader(f)
-        for record_dict in pca_csv:
-            lnglat[(record_dict['sheng'], record_dict['shi'], record_dict['qu'])] = \
-                (float(record_dict['lng']),float(record_dict['lat']))
-
-# (省名, 市名, 区名) -> 出现次数
-from collections import Counter
-locationCounter = Counter() # ('北京市', '北京市', ''): 1, ('北京市', '北京市', '东城区'): 1} # they are different locations
 
 def locationCount(oriText: str):  # 原文进入
     # 按标点拆分成list
     clauseList = re.split(punctuationPattern, oriText)
     # 在list中得到地点   地点处理--直接补全到default的3级获取经纬度
-    from chinese_province_city_area_mapper.transformer import CPCATransformer
-    locationDF = CPCATransformer().transform(clauseList) # dataFrame
+    locationDF = CPCATransformer().transform(clauseList)  # dataFrame
     # 地点加入计数
     locationList = [tuple(x) for x in locationDF.values]
+    print(locationList)
     locationCounter.update(locationList)
 
-def heatmapDataGet():
+
+def heatmapDataGet():  # 将计数后的地点转化为经纬度
     heatmapData = []
-    for (pos,count) in locationCounter.items():
+    for (pos, count) in locationCounter.items():
         pt = lnglat.get(pos)
         if pt != None:
-            heatmapData.append(DotData(pt[0],pt[1],count).obj())
+            heatmapData.append(DotData(pt[0], pt[1], count).obj())
     return heatmapData
+
+
+def readDataBase():  # 对数据库每一行进行地点筛选  ## 初期初始化好所有数据 按照日期计入
+    from news.models import Articles
+    rollnews = Articles.objects.filter()
+    for article in rollnews:
+        body = article.body  # text
+        locationCount(body)
 
 
 def dataGenerator():
     # not from database
-    loadLnglatDict()
-    locationCounter[('北京市', '北京市', '')] =  4
-    locationCount(text1)  # 对数据库每一行进行
+    readDataBase()
     # print(locationCounter)
     return heatmapDataGet()
 
+
 if __name__ == '__main__':
-    print(dataGenerator())
+    # dataGenerator() # 无法访问另一个app的数据库？？
+    locationCount(text1)

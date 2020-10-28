@@ -1,3 +1,5 @@
+"""
+"""
 from django.contrib import admin
 import sys
 from news import models
