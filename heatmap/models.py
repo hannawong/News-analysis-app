@@ -2,6 +2,6 @@ from django.db import models
 
 # Create your models here.
 class HeatMapData(models.Model):
-    date=models.DateTimeField()  #??
+    time=models.CharField(max_length=15,default="null")
     cluster_id=models.IntegerField(default=-1)
-    data=models.CharField(max_length=1000) #my json
+    locdict=models.CharField(max_length=2000,default="null") #my json

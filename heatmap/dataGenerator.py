@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
+
 """
 heatmapData:[{lng: 116.191031, lat: 39.988585, count: 98} , ......]
 双引号的json格式 数据范围、in中国[不提供审查,大约为：经度lng 73.66至135.05,纬度lat 3.86至53.55] count大约0--100
@@ -26,14 +27,21 @@ lnglat
 todo 看地点提取结果而定？--may 改cvs 省级经纬==省会经纬  重复值处理—丢弃省份or存入时即处理？ 目前只能丢弃省份 or 改数据库 
 
 """
+import django
+import os
+
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "xxswl.settings")
+django.setup()  # 为了正确使用数据库
+from news.models import Articles
+from heatmap.models import HeatMapData
+
 import re
+import json
 from heatmap.data.lnglatDict import lnglat
 from chinese_province_city_area_mapper.transformer import CPCATransformer
 
 # (省名, 市名, 区名) -> 出现次数
 from collections import Counter
-
-locationCounter = Counter()  # ('北京市', '北京市', ''): 1, ('北京市', '北京市', '东城区'): 1} # they are different locations
 
 punctuationPattern = r',|\.|/|;|\'|`|\[|\]|<|>|\?|:|"|\{|\}|\~|!|@|#|\$|%|\^|&|\(|\)|-|=|\_|\+|，|。|、|；|【|】|·|！| |…|（|）|‘|’|“|”'
 
@@ -63,35 +71,89 @@ def locationCount(oriText: str):  # 原文进入
     # 在list中得到地点   地点处理--直接补全到default的3级获取经纬度
     locationDF = CPCATransformer().transform(clauseList)  # dataFrame
     # 地点加入计数
-    locationList = [tuple(x) for x in locationDF.values]
-    print(locationList)
-    locationCounter.update(locationList)
+    locationList = [repr(tuple(x)) for x in locationDF.values]
+    dict2 = dict(Counter(locationList))
+    dict2.pop("('', '', '')",0)
+    return dict2
+    # locationCounter.update(locationList)
 
 
-def heatmapDataGet():  # 将计数后的地点转化为经纬度
-    heatmapData = []
+def setloc_for_item(article):
+    body = article.body  # text
+    locdata = repr(locationCount(body))
+    article.keywords += "@@@" + locdata  # 分割符号
+    article.save()
+
+
+def setDataBase():  # 对数据库每一行进行地点筛选  ## 初期初始化好所有数据 按照日期计入
+    rollnews = Articles.objects.filter()
+    for article in rollnews:
+        totdata = article.keywords
+        list = totdata.split("@@@")
+        if len(list) > 1:  # had done
+            continue
+        setloc_for_item(article)
+
+
+def readby_time_cluster(day, cluster_id):
+    day = "2020-10-13"
+    cluster_id = 1  # 0-19
+    rollnews = Articles.objects.filter(cluster_id=cluster_id,time__contains=day)
+    totcounter = Counter()
+    for article in rollnews:
+        list = article.keywords.split("@@@")
+        if len(list) <= 1:  # not done
+            setloc_for_item(article)
+            newlist = article.keywords.split("@@@")
+            list.append(newlist.pop())
+        locdict = json.loads(list.pop())
+        totcounter.update(locdict)
+    # write into my database
+    locdict = repr(dict(totcounter))
+    # print(locdict)
+    heatMapData = HeatMapData(time=day, cluster_id=cluster_id,locdict=locdict)
+    heatMapData.save()
+
+
+
+
+def readDataBase():  # 按照日期、聚类存储到我的数据库
+    # 遍历范围内的time, cluster_id
+    for cluster_id in range(0,20):  # [0,19] # 日期范围，目前只提供从"2020-10-13"到昨天的数据
+        readby_time_cluster(0,cluster_id)
+    # check
+    rollnews = HeatMapData.objects.filter()
+    for article in rollnews:
+        print(article.time,article.cluster_id,article.locdict)
+
+
+
+
+def lnglatDataGet(locationCounter):  # 将计数后的地点转化为经纬度
+    lnglatData = []
     for (pos, count) in locationCounter.items():
         pt = lnglat.get(pos)
         if pt != None:
-            heatmapData.append(DotData(pt[0], pt[1], count).obj())
-    return heatmapData
-
-
-def readDataBase():  # 对数据库每一行进行地点筛选  ## 初期初始化好所有数据 按照日期计入
-    from news.models import Articles
-    rollnews = Articles.objects.filter()
-    for article in rollnews:
-        body = article.body  # text
-        locationCount(body)
+            lnglatData.append(DotData(pt[0], pt[1], count).obj())
+    return lnglatData
 
 
 def dataGenerator():
-    # not from database
-    readDataBase()
-    # print(locationCounter)
-    return heatmapDataGet()
+    # 简单示例 
+    locationCounter = Counter()  # ('北京市', '北京市', ''): 1, ('北京市', '北京市', '东城区'): 1} # they are different locations
+    day = "2020-10-13"
+    cluster_id = 1  # 0-19
+    rollnews = HeatMapData.objects.filter(cluster_id=cluster_id,time__contains=day) # 仅一个条目
+    for article in rollnews:
+        print(article.time,article.cluster_id,article.locdict)
+        locationCounter.update(json.loads(article.locdict))
+
+    return lnglatDataGet(locationCounter)
 
 
 if __name__ == '__main__':
-    # dataGenerator() # 无法访问另一个app的数据库？？
-    locationCount(text1)
+    # set loc for every item in articles-database
+    setDataBase()
+    print("set loc in Articles-database, done")
+    readDataBase()
+    print("collect locs into HeatMapData-database, done")
