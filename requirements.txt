@@ -1,7 +1,10 @@
 django==3.1.1
 pandas==0.25.3
 requests==2.18.4
+jieba==0.42.1
 django-haystack==3.0
+elasticsearch==7.6.0
+djangorestframework==3.12.1
 
 gunicorn==19.9.0
 prometheus-client==0.7.1
