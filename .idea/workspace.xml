@@ -2,19 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="de001851-bbc4-4b5e-895f-687e3e6118bb" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/xxswl-backend.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/xxswl-backend.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/heatmap/dataGenerator.py" beforeDir="false" afterPath="$PROJECT_DIR$/heatmap/dataGenerator.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/heatmap/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/heatmap/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/heatmap/tests.py" beforeDir="false" afterPath="$PROJECT_DIR$/heatmap/tests.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/manage.py" beforeDir="false" afterPath="$PROJECT_DIR$/manage.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/news/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/news/admin.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/news/apps.py" beforeDir="false" afterPath="$PROJECT_DIR$/news/apps.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/news/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/news/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -253,7 +241,7 @@
       <workItem from="1602554444320" duration="5532000" />
       <workItem from="1603268899488" duration="25118000" />
       <workItem from="1603345879880" duration="5539000" />
-      <workItem from="1603861986982" duration="9023000" />
+      <workItem from="1603861986982" duration="9719000" />
     </task>
     <task id="LOCAL-00001" summary="issue#30 不带参数请求的热力图接口">
       <created>1603269183211</created>
@@ -269,7 +257,14 @@
       <option name="project" value="LOCAL" />
       <updated>1603310073521</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="issue #30 确定了news数据库出问题">
+      <created>1603889120717</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1603889120717</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -291,7 +286,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="issue#30 不带参数请求的热力图接口" />
     <MESSAGE value="issue #30 不带数据库的地点识别及经纬度提供接口的实现" />
-    <option name="LAST_COMMIT_MESSAGE" value="issue #30 不带数据库的地点识别及经纬度提供接口的实现" />
+    <MESSAGE value="issue #30 确定了news数据库出问题" />
+    <option name="LAST_COMMIT_MESSAGE" value="issue #30 确定了news数据库出问题" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
