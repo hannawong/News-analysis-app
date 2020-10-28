@@ -137,14 +137,14 @@ def lnglat_data_get(locationCounter):  # 将计数后的地点转化为经纬度
     return lnglatData
 
 
-def data_generator(day= "2020-10-13", cluster_id= 1 ):
+def data_generator( cluster_id= 1 ,starttime= "2020-10-13",endtime= "2020-10-13"):
     # 简单示例 
     locationCounter = Counter()  # ('北京市', '北京市', ''): 1, ('北京市', '北京市', '东城区'): 1} # they are different locations
     day = "2020-10-13"
     cluster_id = 1  # 0-19
     rollnews = HeatMapData.objects.filter(cluster_id=cluster_id,time__contains=day) # 仅一个条目
     for article in rollnews:
-        print(article.time,article.cluster_id,article.locdict)
+        # print(article.time,article.cluster_id,article.locdict)
         locationCounter.update(json.loads(article.locdict))
 
     return lnglat_data_get(locationCounter)
