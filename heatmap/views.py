@@ -11,14 +11,14 @@ heatmapData:[{lng: 116.191031, lat: 39.988585, count: 98} , ......] 双引�
 
 from django.shortcuts import render
 from django.http import JsonResponse
-from .dataGenerator import dataGenerator
+from .dataGenerator import data_generator
 
 from django.views.decorators.csrf import csrf_exempt
     
 #在处理函数加此装饰器即可
 @csrf_exempt
 def heatmap(request):
-    heatmapData = dataGenerator()
+    heatmapData = data_generator()
     rspCode =200 # responseCode
     return JsonResponse({
         'code':rspCode,

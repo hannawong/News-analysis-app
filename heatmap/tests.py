@@ -1,11 +1,11 @@
 from django.test import TestCase
-from .dataGenerator import dataGenerator
+from .dataGenerator import data_generator
 
 # Create your tests here.
 class TestHeatmap(TestCase):
     def test_get(self):
         print("hello")
-        response_data =  dataGenerator()
+        response_data =  data_generator()
         response = self.client.get("/heatmap/heatmap")
         print("hello")
         print(response.json()['data'])

@@ -27,6 +27,8 @@ lnglat
 todo 看地点提取结果而定？--may 改cvs 省级经纬==省会经纬  重复值处理—丢弃省份or存入时即处理？ 目前只能丢弃省份 or 改数据库 
 
 """
+import datetime
+
 import django
 import os
 
@@ -65,7 +67,7 @@ class DotData:
 text1 = "云南封禁be，北京好嘛在三峡骑行，北京好嘛在三峡骑行，北京好嘛在三峡骑行，北京好嘛在三峡骑行，他第一次感受到，‘郦道元’“东三峡巫峡长，猿鸣三声泪沾裳”原来就是这样的景致。在南京，为了坐上人生第一次渡轮，他在码头长凳上过夜。在凉都利川，他发现9月暑天早晨的气温可以低到14度，冻得他用衣服包起了手。 "
 
 
-def locationCount(oriText: str):  # 原文进入
+def location_count(oriText: str):  # 原文进入
     # 按标点拆分成list
     clauseList = re.split(punctuationPattern, oriText)
     # 在list中得到地点   地点处理--直接补全到default的3级获取经纬度
@@ -80,12 +82,12 @@ def locationCount(oriText: str):  # 原文进入
 
 def setloc_for_item(article):
     body = article.body  # text
-    locdata = repr(locationCount(body))
+    locdata = repr(location_count(body))
     article.keywords += "@@@" + locdata  # 分割符号
     article.save()
 
 
-def setDataBase():  # 对数据库每一行进行地点筛选  ## 初期初始化好所有数据 按照日期计入
+def setloc_in_articles():  # 对数据库每一行进行地点筛选  ## 初期初始化好所有数据 按照日期计入
     rollnews = Articles.objects.filter()
     for article in rollnews:
         totdata = article.keywords
@@ -96,8 +98,6 @@ def setDataBase():  # 对数据库每一行进行地点筛选  ## 初期初始�
 
 
 def readby_time_cluster(day, cluster_id):
-    day = "2020-10-13"
-    cluster_id = 1  # 0-19
     rollnews = Articles.objects.filter(cluster_id=cluster_id,time__contains=day)
     totcounter = Counter()
     for article in rollnews:
@@ -110,26 +110,25 @@ def readby_time_cluster(day, cluster_id):
         totcounter.update(locdict)
     # write into my database
     locdict = repr(dict(totcounter))
-    # print(locdict)
     heatMapData = HeatMapData(time=day, cluster_id=cluster_id,locdict=locdict)
     heatMapData.save()
 
 
-
-
-def readDataBase():  # 按照日期、聚类存储到我的数据库
+def setloc_in_heatmapdb():  # 按照日期、聚类存储到我的数据库
     # 遍历范围内的time, cluster_id
     for cluster_id in range(0,20):  # [0,19] # 日期范围，目前只提供从"2020-10-13"到昨天的数据
-        readby_time_cluster(0,cluster_id)
-    # check
-    rollnews = HeatMapData.objects.filter()
-    for article in rollnews:
-        print(article.time,article.cluster_id,article.locdict)
+        d_beign = datetime.datetime.strptime("2020-10-13", '%Y-%m-%d')
+        inc = datetime.timedelta(days=1)
+        now = datetime.datetime.now()  # or end= now-inc
+        d_end = datetime.datetime.strptime("2020-10-20", '%Y-%m-%d')
+        delta = d_end - d_beign
+        for i in range(0, delta.days + 1):  # [begin,end]
+            date = d_beign.strftime('%Y-%m-%d')
+            d_beign += inc
+            readby_time_cluster(date,cluster_id)
 
 
-
-
-def lnglatDataGet(locationCounter):  # 将计数后的地点转化为经纬度
+def lnglat_data_get(locationCounter):  # 将计数后的地点转化为经纬度
     lnglatData = []
     for (pos, count) in locationCounter.items():
         pt = lnglat.get(pos)
@@ -138,7 +137,7 @@ def lnglatDataGet(locationCounter):  # 将计数后的地点转化为经纬度
     return lnglatData
 
 
-def dataGenerator():
+def data_generator(day= "2020-10-13", cluster_id= 1 ):
     # 简单示例 
     locationCounter = Counter()  # ('北京市', '北京市', ''): 1, ('北京市', '北京市', '东城区'): 1} # they are different locations
     day = "2020-10-13"
@@ -148,12 +147,16 @@ def dataGenerator():
         print(article.time,article.cluster_id,article.locdict)
         locationCounter.update(json.loads(article.locdict))
 
-    return lnglatDataGet(locationCounter)
+    return lnglat_data_get(locationCounter)
 
 
 if __name__ == '__main__':
     # set loc for every item in articles-database
-    setDataBase()
-    print("set loc in Articles-database, done")
-    readDataBase()
-    print("collect locs into HeatMapData-database, done")
+    # setloc_in_articles()
+    # print("set loc in Articles-database, done")
+    # setloc_in_heatmapdb()
+    # print("collect locs into HeatMapData-database, done")
+    # check
+    rollnews = HeatMapData.objects.filter()
+    for article in rollnews:
+        print(article.time,article.cluster_id,article.locdict)
