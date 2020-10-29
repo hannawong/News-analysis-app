@@ -152,10 +152,10 @@ def data_generator( cluster_id= 1 ,starttime= "2020-10-13",endtime= "2020-10-13"
 
 if __name__ == '__main__':
     # set loc for every item in articles-database
-    # setloc_in_articles()
-    # print("set loc in Articles-database, done")
-    # setloc_in_heatmapdb()
-    # print("collect locs into HeatMapData-database, done")
+    setloc_in_articles()
+    print("set loc in Articles-database, done")
+    setloc_in_heatmapdb()
+    print("collect locs into HeatMapData-database, done")
     # check
     rollnews = HeatMapData.objects.filter()
     for article in rollnews:
