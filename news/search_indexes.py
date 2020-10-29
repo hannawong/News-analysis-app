@@ -9,6 +9,11 @@ class ArticlesIndex(indexes.SearchIndex, indexes.Indexable):
     title = indexes.CharField(model_attr='title')
     author = indexes.CharField(model_attr='author')
     body = indexes.CharField(model_attr='body')
+    url = indexes.CharField(model_attr='url')
+    time = indexes.DateTimeField(model_attr='time')
+    keywords = indexes.CharField(model_attr='keywords')
+    cluster_id = indexes.IntegerField(model_attr='cluster_id')
+    emotion = indexes.FloatField(model_attr='emotion')
 
     def get_model(self):
         """返回建立索引的模型类"""

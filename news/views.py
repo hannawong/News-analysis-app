@@ -54,7 +54,7 @@ def GetTimeline(request, keyword, starttime, endtime):
         news_list=search(keyword, starttime, endtime)
         return gen_response(200,news_list)
 
-def search(request):
+def searchNews(request):
     def gen_response(code: int, data: str):
         return JsonResponse({
             'code': code,
@@ -62,12 +62,112 @@ def search(request):
         }, status=code)
     if request.method == 'GET':
         q = request.GET.get('q', default='a')
+        time_from = request.GET.get('from')
+        time_to = request.GET.get('to')
+        print(q, time_from, time_to)
+        if time_from and time_to:
+            print(1)
+            q_body={
+                "query":{
+                    "bool":{
+                        "must":[
+                        {
+                            "match":{
+                                "text":q
+                            }
+                        },{
+                            "range": {
+                                "time": {
+                                    "gt": time_from,
+                                    "lte": time_to
+                                }
+                            }
+                        }],
+                        "must_not":[],
+                        "should":[]
+                    }
+                },
+                "from":0,
+                "size":10,
+                "sort":[],
+                "aggs":{}
+            }
+        elif time_from:
+            print(2)
+            q_body={
+                "query":{
+                    "bool":{
+                        "must":[
+                        {
+                            "match":{
+                                "text":q
+                            }
+                        },{
+                            "range": {
+                                "time": {
+                                    "gt": time_from
+                                }
+                            }
+                        }],
+                        "must_not":[],
+                        "should":[]
+                    }
+                },
+                "from":0,
+                "size":10,
+                "sort":[],
+                "aggs":{}
+            }
+        elif time_to:
+            print(3)
+            q_body={
+                "query":{
+                    "bool":{
+                        "must":[
+                        {
+                            "match":{
+                                "text":q
+                            }
+                        },{
+                            "range": {
+                                "time": {
+                                    "lte": time_to
+                                }
+                            }
+                        }],
+                        "must_not":[],
+                        "should":[]
+                    }
+                },
+                "from":0,
+                "size":10,
+                "sort":[],
+                "aggs":{}
+            }
+        else:
+            print(4)
+            q_body={
+                "query":{
+                    "bool":{
+                        "must":[{
+                            "match":{
+                                "text":q
+                            }}],
+                        "must_not":[],
+                        "should":[]
+                    }
+                },
+                "from":0,
+                "size":10,
+                "sort":[],
+                "aggs":{}
+            }
 
-    client = Elasticsearch()
+    es = Elasticsearch()
 
-    response = client.search(
+    response = es.search(
         index="xxswl",
-        body={"query":{"bool":{"must":[{"match":{"text":q}}],"must_not":[],"should":[]}},"from":0,"size":10,"sort":[],"aggs":{}}
+        body=q_body
     )
 
     # for hit in response['hits']['hits']:
