@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -36,6 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'haystack',
+    'rest_framework',
     'news.apps.NewsConfig',
     'heatmap.apps.HeatmapConfig',
 ]
@@ -52,10 +55,13 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'xxswl.urls'
 
+# 模板引擎
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            os.path.join(BASE_DIR, "templates"),
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -80,6 +86,33 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+REST_FRAMEWORK = {
+    'DEFAULT_RENDERER_CLASSES': [
+        'rest_framework.renderers.JSONRenderer',
+    ]
+}
+
+ELASTICSEARCH_DSL = {
+    'default': {
+        'hosts': '127.0.0.1:9200'
+    },
+}
+
+# Haystack
+HAYSTACK_CONNECTIONS = {
+    'default': {
+        'ENGINE': 'haystack.backends.elasticsearch_backend.ElasticsearchSearchEngine',
+        # elasticsearch运行的服务器ip地址，端口号默认为9200
+        'URL': 'http://127.0.0.1:9200/',  # 配置 IP:port
+        # elasticsearch建立的索引库的名称，一般使用项目名作为索引库
+        'INDEX_NAME': 'xxswl',
+    },
+}
+# 设置在Django运行时，如果有数据产生变化(添加、修改、删除)，
+# haystack会自动让Elasticsearch实时生成新数据的索引
+HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
+
 
 
 # Password validation
