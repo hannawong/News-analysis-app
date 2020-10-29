@@ -25,7 +25,7 @@ build:
 unit-test:
   extends: .test
   script:
-    - coverage run -m pytest --junit-xml=xunit-reports/xunit-result.xml # means:--source all 
+    - coverage run -m pytest --junit-xml=xunit-reports/xunit-result.xml # means:--source all
     - BACKEND_RET=$?
     - coverage xml -o coverage-reports/coverage.xml
     - coverage report

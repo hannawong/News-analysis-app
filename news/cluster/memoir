@@ -1,0 +1,4 @@
+
+1.在服务器上运行webcrawler.py
+2. 服务器运行IDF_dic.py, keywords.py, first_cluster.py 得到有关键词、有聚类结果的db文件。
+3. db文件拿回本地，运行python manage.py runserver 127.0.0.1:8000, 访问/news/index0 和 /news/wordcloud/10/50
