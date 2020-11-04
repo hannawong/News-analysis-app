@@ -149,7 +149,18 @@ def data_generator( cluster_id=1, starttime="2020-10-13", endtime="2020-10-13"):
     for i in range(0, delta.days + 1):  # [begin,end]
         day = d_beign.strftime('%Y-%m-%d')
         d_beign += inc
-        rollnews = HeatMapData.objects.filter(cluster_id=cluster_id,time__contains=day) # 仅一个条目
+        rollnews = HeatMapData.objects.filter(cluster_id=cluster_id,time__contains=day)
+        for article in rollnews:
+            # print(article.time,article.cluster_id,article.locdict)
+            locationCounter.update(json.loads(article.locdict))
+    return lnglat_data_get(locationCounter)
+
+
+def data_generator_ids(idlist):  # for ids input
+    # idlst =[24,25,26,27]
+    locationCounter = Counter()
+    for id in idlist:  # [begin,end]
+        rollnews = HeatMapData.objects.filter(id=id)
         for article in rollnews:
             # print(article.time,article.cluster_id,article.locdict)
             locationCounter.update(json.loads(article.locdict))
