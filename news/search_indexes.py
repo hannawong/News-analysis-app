@@ -23,3 +23,8 @@ class ArticlesIndex(indexes.SearchIndex, indexes.Indexable):
         """返回要建立索引的数据查询集"""
         # return self.get_model().objects.filter(is_launched=True)
         return self.get_model().objects.all()
+
+    # def prepare_time(self, obj):
+    #     timearray = time.strptime(obj.time, '%Y-%m-%d %H:%M:%S')
+    #     timestamp = int(time.mktime(timearray))
+    #     return timestamp
