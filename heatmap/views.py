@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
-##  log  setting涓鍔犱簡ALLOWED_HOSTS   鐩墠鍋滅敤璺ㄥ煙淇濇姢 csrf_exempt 
+##  log  setting中增加了ALLOWED_HOSTS   目前停用跨域保护 csrf_exempt 
 
 
 import datetime
@@ -13,7 +13,7 @@ from .dataGenerator import data_generator,timestamp2date
 from django.views.decorators.csrf import csrf_exempt
 
 
-# 鍦ㄥ鐞嗗嚱鏁板姞姝よ楗板櫒鍗冲彲
+# 在处理函数加此装饰器即可
 @csrf_exempt
 def heatmap(request, cluster_id, starttime, endtime):
     global d_begin,d_end
