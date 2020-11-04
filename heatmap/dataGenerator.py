@@ -46,6 +46,7 @@ from chinese_province_city_area_mapper.transformer import CPCATransformer
 from collections import Counter
 
 punctuationPattern = r',|\.|/|;|\'|`|\[|\]|<|>|\?|:|"|\{|\}|\~|!|@|#|\$|%|\^|&|\(|\)|-|=|\_|\+|，|。|、|；|【|】|·|！| |…|（|）|‘|’|“|”'
+#  'utf-8' codec can't decode byte 0xa3 in position 1 中文逗号、中文句号、中文顿号、中文分号等 都有问题 ？？
 
 
 class DotData:
@@ -62,9 +63,6 @@ class DotData:
         if self.count > 100:
             self.count = 100
         return {"lng": self.lng, "lat": self.lat, "count": self.count}
-
-
-text1 = "云南封禁be，北京好嘛在三峡骑行，北京好嘛在三峡骑行，北京好嘛在三峡骑行，北京好嘛在三峡骑行，他第一次感受到，‘郦道元’“东三峡巫峡长，猿鸣三声泪沾裳”原来就是这样的景致。在南京，为了坐上人生第一次渡轮，他在码头长凳上过夜。在凉都利川，他发现9月暑天早晨的气温可以低到14度，冻得他用衣服包起了手。 "
 
 
 def location_count(oriText: str):  # 原文进入
@@ -199,7 +197,7 @@ if __name__ == '__main__':
     print(string2timestamp('2020-10-13 0:43:37'))
 
     # init_data()
-    # # check
-    # rollnews = HeatMapData.objects.filter()
-    # for article in rollnews:
-    #     print(article.time,article.cluster_id,article.locdict)
+    # check
+    rollnews = HeatMapData.objects.filter()
+    for article in rollnews:
+        print(article.time,article.cluster_id,article.locdict)
