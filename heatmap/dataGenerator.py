@@ -139,16 +139,13 @@ def lnglat_data_get(locationCounter):  # 将计数后的地点转化为经纬度
     return lnglatData
 
 
-def data_generator( cluster_id=1, starttime="2020-10-13", endtime="2020-10-13"):
-    # 简单示例 
+def data_generator(cluster_id, d_begin,d_end):
     locationCounter = Counter()  # ('北京市', '北京市', ''): 1, ('北京市', '北京市', '东城区'): 1} # they are different locations
-    d_beign = datetime.datetime.strptime(starttime, '%Y-%m-%d')
     inc = datetime.timedelta(days=1)
-    d_end = datetime.datetime.strptime(endtime, '%Y-%m-%d')
-    delta = d_end - d_beign
+    delta = d_end - d_begin
     for i in range(0, delta.days + 1):  # [begin,end]
-        day = d_beign.strftime('%Y-%m-%d')
-        d_beign += inc
+        day = d_begin.strftime('%Y-%m-%d')
+        d_begin += inc
         rollnews = HeatMapData.objects.filter(cluster_id=cluster_id,time__contains=day)
         for article in rollnews:
             # print(article.time,article.cluster_id,article.locdict)
@@ -175,9 +172,34 @@ def init_data():
     print("collect locs into HeatMapData-database, done")
 
 
+
+# '2015-08-28 16:43:37.283' --> 1440751417.283
+# 或者 '2015-08-28 16:43:37' --> 1440751417.0
+def string2timestamp(strValue):
+    import time
+    try:
+        d = datetime.datetime.strptime(strValue, "%Y-%m-%d %H:%M:%S")
+        t = d.timetuple()
+        timeStamp = int(time.mktime(t))
+        timeStamp = float(str(timeStamp) + str("%06d" % d.microsecond)) / 1000000
+        return timeStamp
+    except ValueError as e:
+        print(e)
+        return 0
+
+
+# 1440751417.283 --> '2015-08-28'
+def timestamp2date(timeStamp):
+    return datetime.datetime.fromtimestamp(timeStamp).date()
+
+
 if __name__ == '__main__':
-    init_data()
-    # check
-    rollnews = HeatMapData.objects.filter()
-    for article in rollnews:
-        print(article.time,article.cluster_id,article.locdict)
+    # now's starttime and endtime
+    print(string2timestamp('2020-10-29 23:43:37'))
+    print(string2timestamp('2020-10-13 0:43:37'))
+
+    # init_data()
+    # # check
+    # rollnews = HeatMapData.objects.filter()
+    # for article in rollnews:
+    #     print(article.time,article.cluster_id,article.locdict)
