@@ -95,6 +95,7 @@ def setloc_in_articles():  # 对数据库每一行进行地点筛选  ## 初期�
         if len(list) > 1:  # had done
             continue
         setloc_for_item(article)
+        print(article.id)
 
 
 def readby_time_cluster(day, cluster_id):
@@ -120,12 +121,13 @@ def setloc_in_heatmapdb():  # 按照日期、聚类存储到我的数据库
         d_beign = datetime.datetime.strptime("2020-10-13", '%Y-%m-%d')
         inc = datetime.timedelta(days=1)
         now = datetime.datetime.now()  # or end= now-inc
-        d_end = datetime.datetime.strptime("2020-10-20", '%Y-%m-%d')
+        d_end = datetime.datetime.strptime("2020-10-29", '%Y-%m-%d')
         delta = d_end - d_beign
         for i in range(0, delta.days + 1):  # [begin,end]
             date = d_beign.strftime('%Y-%m-%d')
             d_beign += inc
             readby_time_cluster(date,cluster_id)
+            print(date,cluster_id)
 
 
 def lnglat_data_get(locationCounter):  # 将计数后的地点转化为经纬度
@@ -137,25 +139,33 @@ def lnglat_data_get(locationCounter):  # 将计数后的地点转化为经纬度
     return lnglatData
 
 
-def data_generator( cluster_id= 1 ,starttime= "2020-10-13",endtime= "2020-10-13"):
+def data_generator( cluster_id=1, starttime="2020-10-13", endtime="2020-10-13"):
     # 简单示例 
     locationCounter = Counter()  # ('北京市', '北京市', ''): 1, ('北京市', '北京市', '东城区'): 1} # they are different locations
-    day = "2020-10-13"
-    cluster_id = 1  # 0-19
-    rollnews = HeatMapData.objects.filter(cluster_id=cluster_id,time__contains=day) # 仅一个条目
-    for article in rollnews:
-        # print(article.time,article.cluster_id,article.locdict)
-        locationCounter.update(json.loads(article.locdict))
-
+    d_beign = datetime.datetime.strptime(starttime, '%Y-%m-%d')
+    inc = datetime.timedelta(days=1)
+    d_end = datetime.datetime.strptime(endtime, '%Y-%m-%d')
+    delta = d_end - d_beign
+    for i in range(0, delta.days + 1):  # [begin,end]
+        day = d_beign.strftime('%Y-%m-%d')
+        d_beign += inc
+        rollnews = HeatMapData.objects.filter(cluster_id=cluster_id,time__contains=day) # 仅一个条目
+        for article in rollnews:
+            # print(article.time,article.cluster_id,article.locdict)
+            locationCounter.update(json.loads(article.locdict))
     return lnglat_data_get(locationCounter)
 
 
-if __name__ == '__main__':
+def init_data():
     # set loc for every item in articles-database
     setloc_in_articles()
     print("set loc in Articles-database, done")
     setloc_in_heatmapdb()
     print("collect locs into HeatMapData-database, done")
+
+
+if __name__ == '__main__':
+    init_data()
     # check
     rollnews = HeatMapData.objects.filter()
     for article in rollnews:

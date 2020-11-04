@@ -111,7 +111,7 @@ HAYSTACK_CONNECTIONS = {
 }
 # 设置在Django运行时，如果有数据产生变化(添加、修改、删除)，
 # haystack会自动让Elasticsearch实时生成新数据的索引
-HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
+# HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
 
 
 
