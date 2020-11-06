@@ -119,8 +119,6 @@ def searchNewsWithHeatmap(request):
     for item in response['hits']['hits']:
         hits_id.append(int(item['_source']['django_id']))
 
-    print(hits_id)
-
     res = {"search_res": response['hits']['hits'], "heatmap": data_generator_ids(hits_id)}
     return gen_response(200, res)
 
@@ -135,3 +133,67 @@ def searchNews(request):
 
     res = gen_response(200, response['hits'])
     return res
+
+def search_date_cluster_info(request):
+    if request.method == 'GET':
+        q = request.GET.get('q', default='a')
+
+    response = searchNewsWithElasticsearch(q, None, None, 0, 10000)
+
+    date_num_cluster_keyword = {}
+
+    for item in response['hits']['hits']:
+        time_str = item['_source']['time'].split('T')[0]
+        cluster_id = item['_source']['cluster_id']
+        keywords_list = item['_source']['keywords'].split(',')
+        if time_str in date_num_cluster_keyword.keys():
+            date_num_cluster_keyword[time_str]['num'] += 1
+            if cluster_id in date_num_cluster_keyword[time_str]['cluster_ids'].keys():
+                date_num_cluster_keyword[time_str]['cluster_ids'][cluster_id]['id_num'] += 1
+                for words in keywords_list:
+                    if words in date_num_cluster_keyword[time_str]['cluster_ids'][cluster_id]['keywords'].keys():
+                        date_num_cluster_keyword[time_str]['cluster_ids'][cluster_id]['keywords'][words] += 1
+                    else:
+                        date_num_cluster_keyword[time_str]['cluster_ids'][cluster_id]['keywords'][words] = 1
+            else:
+                new_id = {
+                    'id_num': 1,
+                    'keywords':{}
+                }
+                for words in keywords_list:
+                    if words in new_id['keywords'].keys():
+                        new_id['keywords'][words] += 1
+                    else:
+                        new_id['keywords'][words] = 1
+                date_num_cluster_keyword[time_str]['cluster_ids'][cluster_id] = new_id
+        else:
+            date_info = {
+                'num': 1,
+                'cluster_ids': {
+                    cluster_id:{
+                        'id_num': 1,
+                        'keywords':{}
+                    }
+                }
+            }
+            for words in keywords_list:
+                if words in date_info['cluster_ids'][cluster_id]['keywords'].keys():
+                    date_info['cluster_ids'][cluster_id]['keywords'][words] += 1
+                else:
+                    date_info['cluster_ids'][cluster_id]['keywords'][words] = 1
+            date_num_cluster_keyword[time_str] = date_info
+
+    # 对关键词排序
+    for date_item in date_num_cluster_keyword:
+        for cluster_id_item in date_num_cluster_keyword[date_item]['cluster_ids']:
+
+            words_list = date_num_cluster_keyword[date_item]['cluster_ids'][cluster_id_item]['keywords']
+
+            sort_keywords = []
+            temp = sorted(words_list.items(), key=lambda x: x[1], reverse=True)
+            for item in temp:
+                sort_keywords.append(item[0])
+
+            date_num_cluster_keyword[date_item]['cluster_ids'][cluster_id_item]['keywords'] = sort_keywords
+
+    return gen_response(200, date_num_cluster_keyword)
