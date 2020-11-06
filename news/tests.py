@@ -1,5 +1,5 @@
 from django.test import TestCase
-
+import requests
 
 # Create your tests here.
 class TestNews(TestCase):
@@ -20,7 +20,7 @@ class TestNews(TestCase):
             else:
                 para = ("?" + "&".join(para_list))
 
-            response = self.client.get('http://62.234.121.168:30000/news/search/' + para)
+            response = requests.get('http://62.234.121.168:30000/news/search/' + para)
             return response
 
         def get_search_date_cluster_info(q=None):
@@ -33,10 +33,9 @@ class TestNews(TestCase):
             else:
                 para = ("?" + "&".join(para_list))
 
-            response = self.client.get('http://62.234.121.168:30000/news/search_date_cluster_info/' + para)
+            response = requests.get('http://62.234.121.168:30000/news/search_date_cluster_info/' + para)
             return response
 
         # test case 1 with default args
         response = get_search_news()
-        print(response.json()['data'])
         self.assertEqual(response.status_code, 200)
