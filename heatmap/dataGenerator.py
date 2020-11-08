@@ -20,6 +20,7 @@ from chinese_province_city_area_mapper.transformer import CPCATransformer
 # (省名, 市名, 区名) -> 出现次数
 from collections import Counter
 
+
 punctuationPattern = r',|\.|/|;|\'|`|\[|\]|<|>|\?|:|"|\{|\}|\~|!|@|#|\$|%|\^|&|\(|\)|-|=|\_|\+' 
 # '|，|。|、|；|【|】|·|！| |…|（|）|‘|’|“|”'
 #  'utf-8' codec can't decode byte 0xa3 in position 1 中文逗号、中文句号、中文顿号、中文分号等 都有问题 ？？
