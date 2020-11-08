@@ -103,14 +103,12 @@ ELASTICSEARCH_DSL = {
 HAYSTACK_CONNECTIONS = {
     'default': {
         'ENGINE': 'haystack.backends.elasticsearch_backend.ElasticsearchSearchEngine',
-        # elasticsearch运行的服务器ip地址，端口号默认为9200
+        # elasticsearch运行的服务器ip地址，端口号默认�?200
         'URL': 'http://127.0.0.1:9200/',  # 配置 IP:port
-        # elasticsearch建立的索引库的名称，一般使用项目名作为索引库
-        'INDEX_NAME': 'xxswl',
+        # elasticsearch建立的索引库的名称，一般使用项目名作为索引�?        'INDEX_NAME': 'xxswl',
     },
 }
-# 设置在Django运行时，如果有数据产生变化(添加、修改、删除)，
-# haystack会自动让Elasticsearch实时生成新数据的索引
+# 设置在Django运行时，如果有数据产生变�?添加、修改、删�?�?# haystack会自动让Elasticsearch实时生成新数据的索引
 # HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
 
 
@@ -139,7 +137,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Shanghai' # changed
 
 USE_I18N = True
 

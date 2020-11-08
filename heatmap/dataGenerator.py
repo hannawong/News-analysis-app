@@ -20,13 +20,12 @@ from chinese_province_city_area_mapper.transformer import CPCATransformer
 # (省名, 市名, 区名) -> 出现次数
 from collections import Counter
 
-punctuationPattern = r',|\.|/|;|\'|`|\[|\]|<|>|\?|:|"|\{|\}|\~|!|@|#|\$|%|\^|&|\(|\)|-|=|\_|\+'
+punctuationPattern = r',|\.|/|;|\'|`|\[|\]|<|>|\?|:|"|\{|\}|\~|!|@|#|\$|%|\^|&|\(|\)|-|=|\_|\+' 
 # '|，|。|、|；|【|】|·|！| |…|（|）|‘|’|“|”'
 #  'utf-8' codec can't decode byte 0xa3 in position 1 中文逗号、中文句号、中文顿号、中文分号等 都有问题 ？？
 
 
 class DotData:
-
     def __init__(self, lng, lat, count):
         self.lng = lng
         self.lat = lat
@@ -161,15 +160,15 @@ def string2timestamp(strValue):
         return 0
 
 
-# 1440751417.283 --> '2015-08-28'
-def timestamp2date(timeStamp):
-    return datetime.datetime.fromtimestamp(timeStamp).date()
-
+import time
+# use time.localtime
+def timestamp2date(timestamp):
+    return datetime.datetime.strptime(time.strftime('%Y-%m-%d',time.localtime(timestamp)),'%Y-%m-%d').date() # datetime.datetime.fromtimestamp(timeStamp).date()
 
 if __name__ == '__main__':
     # now's starttime and endtime
-    print('2020-10-13 0:43:37' , string2timestamp('2020-10-13 0:43:37'))
-    print('2020-10-29 23:43:37', string2timestamp('2020-10-29 23:43:37'))
+    print(string2timestamp('2020-10-29 23:43:37'))
+    print(string2timestamp('2020-10-13 0:43:37'))
 
     # init_data()
     # check

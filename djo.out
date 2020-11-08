@@ -6515,3 +6515,240 @@ Not Found: /news/search_date_cluster_info/
 Not Found: /news/search_date_cluster_info/
 [08/Nov/2020 03:33:03] "GET /news/search_date_cluster_info/?q=1234 HTTP/1.1" 404 3123
 [08/Nov/2020 03:33:03] "GET /news/timeline/1234/1602345600/1604332800 HTTP/1.1" 200 25
+/home/ubuntu/backend/xxswl-backend/xxswl/settings.py changed, reloading.
+
+253 1 倪正东：谁是中国VC/PE常胜之王 2020-10-13 18:38:42
+224 1 南方基金骆帅：选择新能源板块关注创新能力和产量良性增长 2020-10-13 18:50:02
+299 1 华为断供一月 经销商投敌 2020-10-13 19:01:01
+354 1 视频|公募投资总监透露：双循环下6大思考，消费医药行情还没走完 2020-10-13 20:16:20
+402 1 激辩惠民保：冲击健康险 保费将降至数百亿？ 2020-10-13 21:00:49
+695 1 两次错过诺奖级发现！但这位科学家说他并不后悔 2020-10-14 15:10:38
+758 1 罗永浩、王兴力挺，销量超特斯拉 凭什么理想汽车当网红？ 2020-10-14 17:48:00
+862 1 “多面”梁建章有着怎样的世界？ 2020-10-14 23:06:52
+1086 1 寻找区块链力量第7集：区块链如何推动产融结合新格局（全文） 2020-10-15 15:09:54
+1068 1 “各位狱友们 今天你从银行离职了吗” 2020-10-15 15:18:28
+1330 1 威海“白菜价”海景房背后： 投资有风险，买房需谨慎 2020-10-16 04:04:30
+Watching for file changes with StatReloader
+/home/ubuntu/backend/xxswl-backend/heatmap/dataGenerator.py changed, reloading.
+Performing system checks...
+
+System check identified no issues (0 silenced).
+November 08, 2020 - 19:56:06
+Django version 3.1.1, using settings 'xxswl.settings'
+Starting development server at http://0.0.0.0:30000/
+Quit the server with CONTROL-C.
+Watching for file changes with StatReloader
+/home/ubuntu/backend/xxswl-backend/heatmap/dataGenerator.py changed, reloading.
+Performing system checks...
+
+System check identified no issues (0 silenced).
+November 08, 2020 - 20:02:26
+Django version 3.1.1, using settings 'xxswl.settings'
+Starting development server at http://0.0.0.0:30000/
+Quit the server with CONTROL-C.
+Watching for file changes with StatReloader
+/home/ubuntu/backend/xxswl-backend/heatmap/dataGenerator.py changed, reloading.
+Performing system checks...
+
+System check identified no issues (0 silenced).
+November 08, 2020 - 20:06:39
+Django version 3.1.1, using settings 'xxswl.settings'
+Starting development server at http://0.0.0.0:30000/
+Quit the server with CONTROL-C.
+Watching for file changes with StatReloader
+Bad Request: /heatmap/heatmap/1/2020-10-16/2020-10-16
+[08/Nov/2020 20:07:58] "GET /heatmap/heatmap/1/2020-10-16/2020-10-16 HTTP/1.1" 400 72
+Not Found: /favicon.ico
+[08/Nov/2020 20:07:59] "GET /favicon.ico HTTP/1.1" 404 2190
+Not Found: /http:/62.234.121.168:30000/
+[08/Nov/2020 20:16:08] "GET http://62.234.121.168:30000/ HTTP/1.1" 404 1701
+----------------------------------------
+Exception happened during processing of request from ('101.89.19.140', 49561)
+Traceback (most recent call last):
+  File "/usr/lib/python3.8/socketserver.py", line 650, in process_request_thread
+    self.finish_request(request, client_address)
+  File "/usr/lib/python3.8/socketserver.py", line 360, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "/usr/lib/python3.8/socketserver.py", line 720, in __init__
+    self.handle()
+  File "/home/ubuntu/.local/lib/python3.8/site-packages/django/core/servers/basehttp.py", line 174, in handle
+    self.handle_one_request()
+  File "/home/ubuntu/.local/lib/python3.8/site-packages/django/core/servers/basehttp.py", line 182, in handle_one_request
+    self.raw_requestline = self.rfile.readline(65537)
+  File "/usr/lib/python3.8/socket.py", line 669, in readinto
+    return self._sock.recv_into(b)
+ConnectionResetError: [Errno 104] Connection reset by peer
+----------------------------------------
+/home/ubuntu/backend/xxswl-backend/heatmap/dataGenerator.py changed, reloading.
+Performing system checks...
+
+System check identified no issues (0 silenced).
+November 08, 2020 - 20:06:56
+Django version 3.1.1, using settings 'xxswl.settings'
+Starting development server at http://0.0.0.0:30000/
+Quit the server with CONTROL-C.
+could not convert string to float: '2020-10-16'
+Watching for file changes with StatReloader
+Exception in thread django-main-thread:
+Traceback (most recent call last):
+  File "/usr/lib/python3.8/threading.py", line 932, in _bootstrap_inner
+    self.run()
+  File "/usr/lib/python3.8/threading.py", line 870, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/ubuntu/.local/lib/python3.8/site-packages/django/utils/autoreload.py", line 53, in wrapper
+    fn(*args, **kwargs)
+  File "/home/ubuntu/.local/lib/python3.8/site-packages/django/core/management/commands/runserver.py", line 118, in inner_run
+    self.check(display_num_errors=True)
+  File "/home/ubuntu/.local/lib/python3.8/site-packages/django/core/management/base.py", line 392, in check
+    all_issues = checks.run_checks(
+  File "/home/ubuntu/.local/lib/python3.8/site-packages/django/core/checks/registry.py", line 70, in run_checks
+    new_errors = check(app_configs=app_configs, databases=databases)
+  File "/home/ubuntu/.local/lib/python3.8/site-packages/django/core/checks/urls.py", line 13, in check_url_config
+    return check_resolver(resolver)
+  File "/home/ubuntu/.local/lib/python3.8/site-packages/django/core/checks/urls.py", line 23, in check_resolver
+    return check_method()
+  File "/home/ubuntu/.local/lib/python3.8/site-packages/django/urls/resolvers.py", line 408, in check
+    for pattern in self.url_patterns:
+  File "/home/ubuntu/.local/lib/python3.8/site-packages/django/utils/functional.py", line 48, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+  File "/home/ubuntu/.local/lib/python3.8/site-packages/django/urls/resolvers.py", line 589, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+  File "/home/ubuntu/.local/lib/python3.8/site-packages/django/utils/functional.py", line 48, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+  File "/home/ubuntu/.local/lib/python3.8/site-packages/django/urls/resolvers.py", line 582, in urlconf_module
+    return import_module(self.urlconf_name)
+  File "/usr/lib/python3.8/importlib/__init__.py", line 127, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1014, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 991, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 975, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 671, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 783, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/home/ubuntu/backend/xxswl-backend/xxswl/urls.py", line 21, in <module>
+    path('news/',include('news.urls')),
+  File "/home/ubuntu/.local/lib/python3.8/site-packages/django/urls/conf.py", line 34, in include
+    urlconf_module = import_module(urlconf_module)
+  File "/usr/lib/python3.8/importlib/__init__.py", line 127, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1014, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 991, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 975, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 671, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 783, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/home/ubuntu/backend/xxswl-backend/news/urls.py", line 2, in <module>
+    from . import views
+  File "/home/ubuntu/backend/xxswl-backend/news/views.py", line 10, in <module>
+    from heatmap.dataGenerator import data_generator_ids
+  File "/home/ubuntu/backend/xxswl-backend/heatmap/dataGenerator.py", line 5
+    """
+    ^
+SyntaxError: (unicode error) 'utf-8' codec can't decode byte 0xd2 in position 71: invalid continuation byte
+/home/ubuntu/backend/xxswl-backend/heatmap/dataGenerator.py changed, reloading.
+Performing system checks...
+
+Watching for file changes with StatReloader
+Exception in thread django-main-thread:
+Traceback (most recent call last):
+  File "/usr/lib/python3.8/threading.py", line 932, in _bootstrap_inner
+    self.run()
+  File "/usr/lib/python3.8/threading.py", line 870, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/ubuntu/.local/lib/python3.8/site-packages/django/utils/autoreload.py", line 53, in wrapper
+    fn(*args, **kwargs)
+  File "/home/ubuntu/.local/lib/python3.8/site-packages/django/core/management/commands/runserver.py", line 118, in inner_run
+    self.check(display_num_errors=True)
+  File "/home/ubuntu/.local/lib/python3.8/site-packages/django/core/management/base.py", line 392, in check
+    all_issues = checks.run_checks(
+  File "/home/ubuntu/.local/lib/python3.8/site-packages/django/core/checks/registry.py", line 70, in run_checks
+    new_errors = check(app_configs=app_configs, databases=databases)
+  File "/home/ubuntu/.local/lib/python3.8/site-packages/django/core/checks/urls.py", line 13, in check_url_config
+    return check_resolver(resolver)
+  File "/home/ubuntu/.local/lib/python3.8/site-packages/django/core/checks/urls.py", line 23, in check_resolver
+    return check_method()
+  File "/home/ubuntu/.local/lib/python3.8/site-packages/django/urls/resolvers.py", line 408, in check
+    for pattern in self.url_patterns:
+  File "/home/ubuntu/.local/lib/python3.8/site-packages/django/utils/functional.py", line 48, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+  File "/home/ubuntu/.local/lib/python3.8/site-packages/django/urls/resolvers.py", line 589, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+  File "/home/ubuntu/.local/lib/python3.8/site-packages/django/utils/functional.py", line 48, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+  File "/home/ubuntu/.local/lib/python3.8/site-packages/django/urls/resolvers.py", line 582, in urlconf_module
+    return import_module(self.urlconf_name)
+  File "/usr/lib/python3.8/importlib/__init__.py", line 127, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1014, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 991, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 975, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 671, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 783, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/home/ubuntu/backend/xxswl-backend/xxswl/urls.py", line 21, in <module>
+    path('news/',include('news.urls')),
+  File "/home/ubuntu/.local/lib/python3.8/site-packages/django/urls/conf.py", line 34, in include
+    urlconf_module = import_module(urlconf_module)
+  File "/usr/lib/python3.8/importlib/__init__.py", line 127, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1014, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 991, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 975, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 671, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 783, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/home/ubuntu/backend/xxswl-backend/news/urls.py", line 2, in <module>
+    from . import views
+  File "/home/ubuntu/backend/xxswl-backend/news/views.py", line 10, in <module>
+    from heatmap.dataGenerator import data_generator_ids
+  File "/home/ubuntu/backend/xxswl-backend/heatmap/dataGenerator.py", line 29
+SyntaxError: (unicode error) 'utf-8' codec can't decode byte 0xb5 in position 0: invalid start byte
+/home/ubuntu/backend/xxswl-backend/heatmap/dataGenerator.py changed, reloading.
+Performing system checks...
+
+Watching for file changes with StatReloader
+/home/ubuntu/backend/xxswl-backend/heatmap/dataGenerator.py changed, reloading.
+Performing system checks...
+
+System check identified no issues (0 silenced).
+November 08, 2020 - 20:19:23
+Django version 3.1.1, using settings 'xxswl.settings'
+Starting development server at http://0.0.0.0:30000/
+Quit the server with CONTROL-C.
+Watching for file changes with StatReloader
+/home/ubuntu/backend/xxswl-backend/heatmap/dataGenerator.py changed, reloading.
+Performing system checks...
+
+System check identified no issues (0 silenced).
+November 08, 2020 - 20:29:56
+Django version 3.1.1, using settings 'xxswl.settings'
+Starting development server at http://0.0.0.0:30000/
+Quit the server with CONTROL-C.
+Watching for file changes with StatReloader
+/home/ubuntu/backend/xxswl-backend/heatmap/dataGenerator.py changed, reloading.
+Performing system checks...
+
+System check identified no issues (0 silenced).
+November 08, 2020 - 20:31:36
+Django version 3.1.1, using settings 'xxswl.settings'
+Starting development server at http://0.0.0.0:30000/
+Quit the server with CONTROL-C.
+Watching for file changes with StatReloader
+/home/ubuntu/backend/xxswl-backend/heatmap/dataGenerator.py changed, reloading.
+Performing system checks...
+
+System check identified no issues (0 silenced).
+November 08, 2020 - 20:34:50
+Django version 3.1.1, using settings 'xxswl.settings'
+Starting development server at http://0.0.0.0:30000/
+Quit the server with CONTROL-C.
+Watching for file changes with StatReloader
+/home/ubuntu/backend/xxswl-backend/heatmap/dataGenerator.py changed, reloading.
+Performing system checks...
+
+System check identified no issues (0 silenced).
+November 08, 2020 - 20:35:47
+Django version 3.1.1, using settings 'xxswl.settings'
+Starting development server at http://0.0.0.0:30000/
+Quit the server with CONTROL-C.
+Watching for file changes with StatReloader
