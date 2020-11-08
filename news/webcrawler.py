@@ -1,16 +1,5 @@
-############################################
-###爬虫
 
-###已完成存储数据库
-###已完成增量爬取
-
-
-
-import sys
-sys.path.append("/home/ubuntu/xxswl-backend/")
-import os,django
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "xxswl.settings")# project_name 项目名称
-django.setup()
+# coding = unicode
 
 
 import re
@@ -18,11 +7,18 @@ import time
 import requests
 import pandas as pd
 import jieba
+import sys
+sys.path.append("/home/ubuntu/backend/xxswl-backend/")
+print(sys.path)
+import os,django
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "xxswl.settings")# project_name 项目名称
+django.setup()
+
 from news.models import Articles
 from news.models import WeiboHot
 
 
-def crawler_weibo_hot(): ####抓取50条微博热搜，作为“热点榜单”来展示
+def crawler_weibo_hot(): 
     WeiboHot.objects.all().delete()
     url = 'https://s.weibo.com/top/summary/summary?cate=realtimehot'
     strhtml = requests.get(url).text
@@ -40,18 +36,17 @@ def crawler_weibo_hot(): ####抓取50条微博热搜，作为“热点榜单”�
         print("写入微博热搜")
 crawler_weibo_hot()
 
-#########################爬取新浪滚动新闻##################################
-delta_time = 60*60*3##每隔30s爬取一次，增量存储。最终运行时可调为60*60
+
+delta_time = 60 # *60*3 
 IDF_contains_doc={}
-def news_crawler():  #####爬取50个首页新闻(已实现增量爬取,已实现数据库存储)#####
+def news_crawler():  
     global IDF_contains_doc
     url_list = []
     sina_rollnews = Articles.objects.filter()
-    doc_num=len(sina_rollnews)  #共有多少篇文章
-    print("doc:",doc_num)
+    doc_num=len(sina_rollnews)  
     print(sina_rollnews, "=============================")
 
-    pre_url = Articles.objects.values_list("url")  #很难会与100个新闻之前重复
+    pre_url = Articles.objects.values_list("url")  
     pre_url_list = []
     for i in range(max(0, len(pre_url)-100), len(pre_url)):
         pre_url_list.append(pre_url[i][0])
@@ -101,7 +96,7 @@ def news_crawler():  #####爬取50个首页新闻(已实现增量爬取,已实�
             body = ""
             for match in it4:
                 body += match.group("text")
-            body = re.sub(pattern5, "", body)  ##去除<>里的内容
+            body = re.sub(pattern5, "", body)  
             news = Articles()
             news.url = urls
             news.title = title
@@ -111,8 +106,8 @@ def news_crawler():  #####爬取50个首页新闻(已实现增量爬取,已实�
             news.body=body
             doc_num += 1
             news.save()
-            print("写入数据库成功")
+            print("done")
 
-while 1:   #一直不停的爬取
+while 1: 
     news_crawler()
     time.sleep(delta_time)

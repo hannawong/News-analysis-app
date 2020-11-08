@@ -1,20 +1,13 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
-##  log  setting中增加了ALLOWED_HOSTS   目前停用跨域保护 csrf_exempt 
-
-
 import datetime
 
 from django.shortcuts import render
 from django.http import JsonResponse
 from .dataGenerator import data_generator,timestamp2date
 
-from django.views.decorators.csrf import csrf_exempt
 
-
-# 在处理函数加此装饰器即可
-@csrf_exempt
 def heatmap(request, cluster_id, starttime, endtime):
     global d_begin,d_end
 
@@ -45,6 +38,7 @@ def heatmap(request, cluster_id, starttime, endtime):
         except Exception as e:
             print(e)
             return gen_response(400, str(e))
+        print(starttime, endtime,starttime2, endtime2)
         print(cluster_id2, d_begin,d_end)
         heatmapData = data_generator(cluster_id2, d_begin,d_end)
         return JsonResponse({
