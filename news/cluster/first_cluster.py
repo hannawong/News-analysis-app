@@ -8,6 +8,7 @@ import json
 import sys
 print(sys.path)
 sys.path.append("/home/ubuntu/xxswl-backend/")
+sys.path.append("D:\\Program Files\\PycharmProjects\\xxswl-backend")
 import os,django
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "xxswl.settings")# project_name 项目名称
 django.setup()

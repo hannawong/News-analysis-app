@@ -6,6 +6,7 @@ import numpy
 import json
 
 import sys
+sys.path.append("D:\\Program Files\\PycharmProjects\\xxswl-backend")
 sys.path.append("/home/ubuntu/xxswl-backend/")
 import os,django
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "xxswl.settings")# project_name 项目名称

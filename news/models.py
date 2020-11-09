@@ -19,3 +19,8 @@ class WeiboHot(models.Model):
 
     def __str__(self):
         return self.url+self.title+str(self.time)
+
+
+class WeiboSocialEvents(models.Model):
+    id=models.IntegerField(primary_key=True)
+    title=models.CharField(max_length=300)
