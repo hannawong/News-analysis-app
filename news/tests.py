@@ -64,19 +64,23 @@ class TestNews(TestCase):
         # test case 2 with args
         response = get_search_news('a')
         self.assertEqual(response.status_code, 200)
-        response = get_search_news('a', '2020-10-1')
+        response = get_search_news('a', '2020-10-01')
         self.assertEqual(response.status_code, 200)
-        response = get_search_news('a', '2020-10-1', '2020-10-25')
+        response = get_search_news('a', '2020-10-01', '2020-10-25')
         self.assertEqual(response.status_code, 200)
-        response = get_search_news('a', '2020-10-1', '2020-10-25', 10)
+        response = get_search_news('a', '2020-10-01', '2020-10-25', 10)
         # test case 2 with args
         self.assertEqual(response.status_code, 200)
         response = get_search_heatmap('a')
         self.assertEqual(response.status_code, 200)
-        response = get_search_heatmap('a', '2020-10-1')
+        response = get_search_heatmap('a', '2020-10-01')
         self.assertEqual(response.status_code, 200)
-        response = get_search_heatmap('a', '2020-10-1', '2020-10-25')
+        response = get_search_heatmap('a', '2020-10-01', '2020-10-25')
         self.assertEqual(response.status_code, 200)
 
         response = get_search_date_cluster_info('a')
         self.assertEqual(response.status_code, 200)
+
+        # fail cases
+        response = get_search_news('a', '2020-10-1')
+        self.assertEqual((response.status_code==200), False)
