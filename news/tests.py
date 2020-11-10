@@ -68,7 +68,7 @@ class TestNews(TestCase):
         self.assertEqual(response.status_code, 200)
         response = get_search_news('a', '2020-10-01', '2020-10-25')
         self.assertEqual(response.status_code, 200)
-        response = get_search_news('a', '2020-10-01', '2020-10-25', 10)
+        response = get_search_news('a', '2020-10-01', '2020-10-25', '10')
         # test case 2 with args
         self.assertEqual(response.status_code, 200)
         response = get_search_heatmap('a')

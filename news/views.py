@@ -164,7 +164,8 @@ def search_date_cluster_info(request):
     for item in response['hits']['hits']:
         time_str = item['_source']['time'].split('T')[0]
         cluster_id = item['_source']['cluster_id']
-        keywords_list = item['_source']['keywords'].split('@@@')[0].split(',')
+        item_keyword = item['_source']['keywords'].split('@@@')[0]
+        keywords_list = item_keyword.split(',')
         if time_str in date_num_cluster_keyword.keys():
             date_num_cluster_keyword[time_str]['num'] += 1
             if cluster_id in date_num_cluster_keyword[time_str]['cluster_ids'].keys():
