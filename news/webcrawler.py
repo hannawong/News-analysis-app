@@ -16,6 +16,7 @@ django.setup()
 
 from news.models import Articles
 from news.models import WeiboHot
+from news.models import WeiboSocialEvents
 
 
 def crawler_weibo_hot(): 
@@ -34,8 +35,23 @@ def crawler_weibo_hot():
         hot.title+="@"+str("https://s.weibo.com"+match.group("url")[1:-2])
         hot.save()
         print("写入微博热搜")
+def crawl_weibo_socialevents():
+    WeiboSocialEvents.objects.all().delete()
+    url = 'https://s.weibo.com/top/summary/summary?cate=socialevent'
+    strhtml = requests.get(url).text
+    pattern0 = r"<a href=\"(?P<url>.*?)\".*?>(?P<title>#.*#)</a>"
+    it = re.finditer(pattern0, strhtml)
+    id = 0
+    for match in it:
+        hot = WeiboSocialEvents()
+        hot.id = id
+        id += 1
+        hot.title = match.group("title")
+        hot.title += "@" + str("https://s.weibo.com" + match.group("url"))
+        hot.save()
+        print("写入微博要闻")
 crawler_weibo_hot()
-
+crawl_weibo_socialevents()
 
 delta_time = 60 # *60*3 
 IDF_contains_doc={}

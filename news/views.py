@@ -3,7 +3,7 @@ from django.http import JsonResponse, HttpResponse
 import json
 import re
 import jieba
-from .models import Articles,WeiboHot
+from .models import Articles,WeiboHot,WeiboSocialEvents
 from django.core.exceptions import ValidationError
 from news.inverted_index.search import wordcloud, search
 from elasticsearch import Elasticsearch
@@ -22,12 +22,6 @@ def gen_response(code: int, data):
 
 def message(request):
     if request.method == 'GET':
-        limit = request.GET.get('limit', default='100')
-        offset = request.GET.get('offset', default='0')
-        if not limit.isdigit():
-            return gen_response(400, '{} is not a number'.format(limit))
-        if not offset.isdigit():
-            return gen_response(400, '{} is not a number'.format(offset))
         response= gen_response(200, [
                 {
                     'id':msg.id,
@@ -35,7 +29,32 @@ def message(request):
                     'hot':msg.hot,
                     'url':msg.title.split("@")[1]
                 }
-                for msg in WeiboHot.objects.all().order_by('-pk')[int(offset) : int(offset) + int(limit)]
+                for msg in WeiboHot.objects.all()
+            ])
+        return response
+
+def message1(request):
+    if request.method == 'GET':
+        response= gen_response(200, [
+                {
+                    'id':msg.id,
+                    'title':msg.title.split("@")[0],
+                    'url':msg.title.split("@")[1]
+                }
+                for msg in WeiboSocialEvents.objects.all()
+            ])
+        return response
+
+def message2(request):
+    length=len(Articles.objects.all())
+    if request.method == 'GET':
+        response= gen_response(200, [
+                {
+                    'title':msg.title,
+                    'url':msg.url,
+                    'time':msg.time
+                }
+                for msg in Articles.objects.all().order_by('time')[length-50:]
             ])
         return response
 
@@ -145,7 +164,8 @@ def search_date_cluster_info(request):
     for item in response['hits']['hits']:
         time_str = item['_source']['time'].split('T')[0]
         cluster_id = item['_source']['cluster_id']
-        keywords_list = item['_source']['keywords'].split(',')
+        item_keyword = item['_source']['keywords'].split('@@@')[0]
+        keywords_list = item_keyword.split(',')
         if time_str in date_num_cluster_keyword.keys():
             date_num_cluster_keyword[time_str]['num'] += 1
             if cluster_id in date_num_cluster_keyword[time_str]['cluster_ids'].keys():
