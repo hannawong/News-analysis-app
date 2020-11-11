@@ -155,7 +155,7 @@
 
    | code | description                                                  |
    | ---- | ------------------------------------------------------------ |
-   | 200  | `response["data"]["search_res"]`和`response["data"]["heatmap"]`分别为针对查询内容的新闻搜索结果和对应的热力图 |
+   | 200  | `response["data"]["heatmap"]`为针对查询内容的新闻搜索结果对应的热力图 |
    | 400  | 参数异常                                                     |
 
    http://127.0.0.1:8000/news/search_heatmap/?q=a&from=2020-10-13
@@ -164,29 +164,6 @@
    {
        "code": 200,
        "data": {
-           "search_res": [
-               {
-                   "_index": "xxswl",
-                   "_type": "modelresult",
-                   "_id": "news.articles.362",
-                   "_score": 0.96147084,
-                   "_source": {
-                       "id": "news.articles.362",
-                       "django_ct": "news.articles",
-                       "django_id": "362",
-                       "text": "暴风还值得救吗？\n欢迎关注“创事记”的微信订阅号：sinachuangshiji　文/森语谢东霞编辑/……值得救吗？”\nsina_mobile\n暴风,风行,影音,冯鑫,播放器,电视,体育,视频,图源,拯救,会员,在线,代,驰,集团,互联网,兆,广告,救,蔡文胜\n",
-                       "title": "暴风还值得救吗？",
-                       "author": "sina_mobile",
-                       "body": "欢迎关注“创事记”的微信订阅号：sinachuangshiji　文/森语谢东霞编辑/子夜沉寂已久的暴风，又有了新动静。&nbsp;10月9日，不少网友发现，暴风影音官网上的Windows版客户端完成了……",
-                       "url": "http://tech.sina.cn/csj/2020-10-13/doc-iiznezxr5776210.d.html",
-                       "time": "2020-10-13T20:08:41",
-                       "keywords": "暴风,风行,影音,冯鑫,播放器,电视,体育,视频,图源,拯救,会员,在线,代,驰,集团,互联网,兆,广告,救,蔡文胜",
-                       "cluster_id": 2,
-                       "emotion": 1.0
-                   }
-               },
-               ………………
-           ],
            "heatmap": [
                {
                    "lng": 116.39564503787867,
