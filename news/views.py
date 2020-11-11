@@ -138,7 +138,7 @@ def searchNewsWithHeatmap(request):
     for item in response['hits']['hits']:
         hits_id.append(int(item['_source']['django_id']))
 
-    res = {"search_res": response['hits']['hits'], "heatmap": data_generator_ids(hits_id)}
+    res = {"heatmap": data_generator_ids(hits_id)}
     return gen_response(200, res)
 
 def searchNews(request):
