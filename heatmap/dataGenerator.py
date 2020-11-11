@@ -1,30 +1,25 @@
 #!/usr/bin/python
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 
 import datetime
+from heatmap.re_funcs import punc_clauseList
 
 import django
 import os
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "xxswl.settings")
-django.setup()  # ÎªÁËÕýÈ·Ê¹ÓÃÊý¾Ý¿â
+django.setup()  # Îªï¿½ï¿½ï¿½ï¿½È·Ê¹ï¿½ï¿½ï¿½ï¿½ï¿½Ý¿ï¿½
 from news.models import Articles
 from heatmap.models import HeatMapData
 
-import re
+
 import json
 from heatmap.data.lnglatDict import lnglat
 from chinese_province_city_area_mapper.transformer import CPCATransformer
 
-# (Ê¡Ãû, ÊÐÃû, ÇøÃû) -> ³öÏÖ´ÎÊý
+# (Ê¡ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½) -> ï¿½ï¿½ï¿½Ö´ï¿½ï¿½ï¿½
 from collections import Counter
-
-
-punctuationPattern = r',|\.|/|;|\'|`|\[|\]|<|>|\?|:|"|\{|\}|\~|!|@|#|\$|%|\^|&|\(|\)|-|=|\_|\+' 
-# '|£¬|¡£|¡¢|£»|¡¾|¡¿|¡¤|£¡| |¡­|£¨|£©|¡®|¡¯|¡°|¡±'
-#  'utf-8' codec can't decode byte 0xa3 in position 1 ÖÐÎÄ¶ººÅ¡¢ÖÐÎÄ¾äºÅ¡¢ÖÐÎÄ¶ÙºÅ¡¢ÖÐÎÄ·ÖºÅµÈ ¶¼ÓÐÎÊÌâ £¿£¿
-
 
 class DotData:
     def __init__(self, lng, lat, count):
@@ -40,12 +35,12 @@ class DotData:
         return {"lng": self.lng, "lat": self.lat, "count": self.count}
 
 
-def location_count(oriText: str):  # Ô­ÎÄ½øÈë
-    # °´±êµã²ð·Ö³Élist
-    clauseList = re.split(punctuationPattern, oriText)
-    # ÔÚlistÖÐµÃµ½µØµã   µØµã´¦Àí--Ö±½Ó²¹È«µ½defaultµÄ3¼¶»ñÈ¡¾­Î³¶È
+def location_count(oriText: str):  # Ô­ï¿½Ä½ï¿½ï¿½ï¿½
+    # ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö³ï¿½list
+    clauseList = punc_clauseList(oriText)
+    # ï¿½ï¿½listï¿½ÐµÃµï¿½ï¿½Øµï¿½   ï¿½Øµã´¦ï¿½ï¿½--Ö±ï¿½Ó²ï¿½È«ï¿½ï¿½defaultï¿½ï¿½3ï¿½ï¿½ï¿½ï¿½È¡ï¿½ï¿½Î³ï¿½ï¿½
     locationDF = CPCATransformer().transform(clauseList)  # dataFrame
-    # µØµã¼ÓÈë¼ÆÊý
+    # ï¿½Øµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     locationList = [repr(tuple(x)) for x in locationDF.values]
     dict2 = dict(Counter(locationList))
     dict2.pop("('', '', '')",0)
@@ -56,11 +51,11 @@ def location_count(oriText: str):  # Ô­ÎÄ½øÈë
 def setloc_for_item(article):
     body = article.body  # text
     locdata = repr(location_count(body))
-    article.keywords += "@@@" + locdata  # ·Ö¸î·ûºÅ
+    article.keywords += "@@@" + locdata  # ï¿½Ö¸ï¿½ï¿½ï¿½ï¿½
     article.save()
 
 
-def setloc_in_articles():  # ¶ÔÊý¾Ý¿âÃ¿Ò»ÐÐ½øÐÐµØµãÉ¸Ñ¡  ## ³õÆÚ³õÊ¼»¯ºÃËùÓÐÊý¾Ý °´ÕÕÈÕÆÚ¼ÆÈë
+def setloc_in_articles():  # ï¿½ï¿½ï¿½ï¿½ï¿½Ý¿ï¿½Ã¿Ò»ï¿½Ð½ï¿½ï¿½ÐµØµï¿½É¸Ñ¡  ## ï¿½ï¿½ï¿½Ú³ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú¼ï¿½ï¿½ï¿½
     rollnews = Articles.objects.filter()
     for article in rollnews:
         totdata = article.keywords
@@ -88,9 +83,9 @@ def readby_time_cluster(day, cluster_id):
     heatMapData.save()
 
 
-def setloc_in_heatmapdb():  # °´ÕÕÈÕÆÚ¡¢¾ÛÀà´æ´¢µ½ÎÒµÄÊý¾Ý¿â
-    # ±éÀú·¶Î§ÄÚµÄtime, cluster_id
-    for cluster_id in range(0,20):  # [0,19] # ÈÕÆÚ·¶Î§£¬Ä¿Ç°Ö»Ìá¹©´Ó"2020-10-13"µ½×òÌìµÄÊý¾Ý
+def setloc_in_heatmapdb():  # ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú¡ï¿½ï¿½ï¿½ï¿½ï¿½æ´¢ï¿½ï¿½ï¿½Òµï¿½ï¿½ï¿½ï¿½Ý¿ï¿½
+    # ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î§ï¿½Úµï¿½time, cluster_id
+    for cluster_id in range(0,20):  # [0,19] # ï¿½ï¿½ï¿½Ú·ï¿½Î§ï¿½ï¿½Ä¿Ç°Ö»ï¿½á¹©ï¿½ï¿½"2020-10-13"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         d_beign = datetime.datetime.strptime("2020-10-13", '%Y-%m-%d')
         inc = datetime.timedelta(days=1)
         now = datetime.datetime.now()  # or end= now-inc
@@ -103,7 +98,7 @@ def setloc_in_heatmapdb():  # °´ÕÕÈÕÆÚ¡¢¾ÛÀà´æ´¢µ½ÎÒµÄÊý¾Ý¿â
             print(date,cluster_id)
 
 
-def lnglat_data_get(locationCounter):  # ½«¼ÆÊýºóµÄµØµã×ª»¯Îª¾­Î³¶È
+def lnglat_data_get(locationCounter):  # ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÄµØµï¿½×ªï¿½ï¿½Îªï¿½ï¿½Î³ï¿½ï¿½
     lnglatData = []
     for (pos, count) in locationCounter.items():
         pt = lnglat.get(pos)
@@ -113,7 +108,7 @@ def lnglat_data_get(locationCounter):  # ½«¼ÆÊýºóµÄµØµã×ª»¯Îª¾­Î³¶È
 
 
 def data_generator(cluster_id, d_begin,d_end):
-    locationCounter = Counter()  # ('±±¾©ÊÐ', '±±¾©ÊÐ', ''): 1, ('±±¾©ÊÐ', '±±¾©ÊÐ', '¶«³ÇÇø'): 1} # they are different locations
+    locationCounter = Counter()  # ('ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', ''): 1, ('ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½'): 1} # they are different locations
     inc = datetime.timedelta(days=1)
     delta = d_end - d_begin
     for i in range(0, delta.days + 1):  # [begin,end]
@@ -147,7 +142,7 @@ def init_data():
 
 
 # '2015-08-28 16:43:37.283' --> 1440751417.283
-# »òÕß '2015-08-28 16:43:37' --> 1440751417.0
+# ï¿½ï¿½ï¿½ï¿½ '2015-08-28 16:43:37' --> 1440751417.0
 def string2timestamp(strValue):
     import time
     try:
@@ -168,6 +163,8 @@ def timestamp2date(timestamp):
 
 if __name__ == '__main__':
     # now's starttime and endtime
+    print(location_count("test , test, test..."))
+
     print(string2timestamp('2020-10-29 23:43:37'))
     print(string2timestamp('2020-10-13 0:43:37'))
 

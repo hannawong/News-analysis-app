@@ -1,5 +1,6 @@
 from django.test import TestCase
 import requests
+from news.re_funcs import fwq_url
 
 # Create your tests here.
 class TestNews(TestCase):
@@ -20,7 +21,7 @@ class TestNews(TestCase):
             else:
                 para = ("?" + "&".join(para_list))
 
-            response = requests.get('http://62.234.121.168:30000/news/search/' + para)
+            response = requests.get(fwq_url + '/news/search/' + para)
             return response
 
         def get_search_heatmap(q=None, time_from=None, time_to=None):
@@ -37,7 +38,7 @@ class TestNews(TestCase):
             else:
                 para = ("?" + "&".join(para_list))
 
-            response = requests.get('http://62.234.121.168:30000/news/search_heatmap/' + para)
+            response = requests.get(fwq_url + '/news/search_heatmap/' + para)
             return response
 
         def get_search_date_cluster_info(q=None):
@@ -50,7 +51,7 @@ class TestNews(TestCase):
             else:
                 para = ("?" + "&".join(para_list))
 
-            response = requests.get('http://62.234.121.168:30000/news/search_date_cluster_info/' + para)
+            response = requests.get(fwq_url + '/news/search_date_cluster_info/' + para)
             return response
 
         # test case 1 with default args
@@ -83,4 +84,4 @@ class TestNews(TestCase):
 
         # fail cases
         response = get_search_news('a', '2020-10-1')
-        self.assertEqual((response.status_code==200), False)
+        self.assertEqual((response.status_code == 200), False)

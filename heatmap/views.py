@@ -1,11 +1,9 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
-import datetime
 
-from django.shortcuts import render
 from django.http import JsonResponse
-from .dataGenerator import data_generator,timestamp2date
+from heatmap.dataGenerator import data_generator,timestamp2date
 
 
 def heatmap(request, cluster_id, starttime, endtime):

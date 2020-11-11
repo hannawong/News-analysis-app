@@ -1,17 +1,15 @@
-
 # coding = unicode
 
-
-import re
 import time
 import requests
-import pandas as pd
-import jieba
+from news.re_funcs import re_finditer, re_sub
 import sys
+
 sys.path.append("/home/ubuntu/backend/xxswl-backend/")
 print(sys.path)
-import os,django
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "xxswl.settings")# project_name 项目名称
+import os, django
+
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "xxswl.settings")  # project_name 项目名称
 django.setup()
 
 from news.models import Articles
@@ -19,12 +17,12 @@ from news.models import WeiboHot
 from news.models import WeiboSocialEvents
 
 
-def crawler_weibo_hot(): 
+def crawler_weibo_hot():
     WeiboHot.objects.all().delete()
     url = 'https://s.weibo.com/top/summary/summary?cate=realtimehot'
     strhtml = requests.get(url).text
     pattern0 = r"<a href=(?P<url>.*Refer=.*)target=.*>(?P<title>.*)</a>\n.*<span>(?P<hot>\d*)</span>"
-    it = re.finditer(pattern0, strhtml)
+    it = re_finditer(pattern0, strhtml)
     id = 0
     for match in it:
         hot = WeiboHot()
@@ -32,15 +30,17 @@ def crawler_weibo_hot():
         id += 1
         hot.title = match.group("title")
         hot.hot = match.group("hot")
-        hot.title+="@"+str("https://s.weibo.com"+match.group("url")[1:-2])
+        hot.title += "@" + str("https://s.weibo.com" + match.group("url")[1:-2])
         hot.save()
         print("写入微博热搜")
+
+
 def crawl_weibo_socialevents():
     WeiboSocialEvents.objects.all().delete()
     url = 'https://s.weibo.com/top/summary/summary?cate=socialevent'
     strhtml = requests.get(url).text
     pattern0 = r"<a href=\"(?P<url>.*?)\".*?>(?P<title>#.*#)</a>"
-    it = re.finditer(pattern0, strhtml)
+    it = re_finditer(pattern0, strhtml)
     id = 0
     for match in it:
         hot = WeiboSocialEvents()
@@ -50,21 +50,25 @@ def crawl_weibo_socialevents():
         hot.title += "@" + str("https://s.weibo.com" + match.group("url"))
         hot.save()
         print("写入微博要闻")
+
+
 crawler_weibo_hot()
 crawl_weibo_socialevents()
 
-delta_time = 60 # *60*3 
-IDF_contains_doc={}
-def news_crawler():  
+delta_time = 60  # *60*3
+IDF_contains_doc = {}
+
+
+def news_crawler():
     global IDF_contains_doc
     url_list = []
     sina_rollnews = Articles.objects.filter()
-    doc_num=len(sina_rollnews)  
+    doc_num = len(sina_rollnews)
     print(sina_rollnews, "=============================")
 
-    pre_url = Articles.objects.values_list("url")  
+    pre_url = Articles.objects.values_list("url")
     pre_url_list = []
-    for i in range(max(0, len(pre_url)-100), len(pre_url)):
+    for i in range(max(0, len(pre_url) - 100), len(pre_url)):
         pre_url_list.append(pre_url[i][0])
     print(pre_url_list)
     init_url = 'https://feed.mix.sina.com.cn/api/roll/get?pageid=153&lid=2509&k=&num=50&page={}'
@@ -96,34 +100,35 @@ def news_crawler():
             time = ""
             author = ""
             publish_id = ""
-            it = re.finditer(pattern0, text)
+            it = re_finditer(pattern0, text)
             for match in it:
                 title = match.group("title")
-            it1 = re.finditer(pattern1, text)
+            it1 = re_finditer(pattern1, text)
             for match in it1:
                 time = match.group("time")
-            it2 = re.finditer(pattern2, text)
+            it2 = re_finditer(pattern2, text)
             for match in it2:
                 author = match.group("author")
-            it3 = re.finditer(pattern3, text)
+            it3 = re_finditer(pattern3, text)
             for match in it3:
                 publish_id = match.group("id")
-            it4 = re.finditer(pattern4, text)
+            it4 = re_finditer(pattern4, text)
             body = ""
             for match in it4:
                 body += match.group("text")
-            body = re.sub(pattern5, "", body)  
+            body = re_sub(pattern5, "", body)
             news = Articles()
             news.url = urls
             news.title = title
             news.time = time
             news.author = author
             news.publish_id = publish_id
-            news.body=body
+            news.body = body
             doc_num += 1
             news.save()
             print("done")
 
-while 1: 
+
+while 1:
     news_crawler()
     time.sleep(delta_time)
