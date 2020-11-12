@@ -4,17 +4,17 @@ import time
 import requests
 from news.re_funcs import re_finditer, re_sub
 import sys
-
-sys.path.append("/home/ubuntu/backend/xxswl-backend/")
-print(sys.path)
-import os, django
-
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "xxswl.settings")  # project_name 项目名称
-django.setup()
-
+import os
+import django
 from news.models import Articles
 from news.models import WeiboHot
 from news.models import WeiboSocialEvents
+
+sys.path.append("/home/ubuntu/backend/xxswl-backend/")
+print(sys.path)
+
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "xxswl.settings")  # project_name 项目名称
+django.setup()
 
 
 def crawler_weibo_hot():
@@ -86,7 +86,7 @@ def news_crawler():
             try:
                 text = requests.get(urls).text
                 url_list.append(urls)
-            except:
+            except Exception:
                 print("no")
                 continue
             # print(text)

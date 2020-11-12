@@ -7,6 +7,7 @@ from .models import Articles,WeiboHot,WeiboSocialEvents
 from django.core.exceptions import ValidationError
 from news.inverted_index.search import wordcloud, search
 from elasticsearch import Elasticsearch
+from elasticsearch import exceptions as elasticsearch_excaptions
 from heatmap.dataGenerator import data_generator_ids
 
 import sys
@@ -23,46 +24,45 @@ def gen_response(code: int, data):
 def message(request):
     if request.method == 'GET':
         response= gen_response(200, [
-                {
-                    'id':msg.id,
-                    'title':msg.title.split("@")[0],
-                    'hot':msg.hot,
-                    'url':msg.title.split("@")[1]
-                }
-                for msg in WeiboHot.objects.all()
-            ])
+            {
+                'id':msg.id,
+                'title':msg.title.split("@")[0],
+                'hot':msg.hot,
+                'url':msg.title.split("@")[1]
+            }
+            for msg in WeiboHot.objects.all()
+        ])
         return response
 
 def message1(request):
     if request.method == 'GET':
         response= gen_response(200, [
-                {
-                    'id':msg.id,
-                    'title':msg.title.split("@")[0],
-                    'url':msg.title.split("@")[1]
-                }
-                for msg in WeiboSocialEvents.objects.all()
-            ])
+            {
+                'id':msg.id,
+                'title':msg.title.split("@")[0],
+                'url':msg.title.split("@")[1]
+            }
+            for msg in WeiboSocialEvents.objects.all()
+        ])
         return response
 
 def message2(request):
     length=len(Articles.objects.all())
     if request.method == 'GET':
         response= gen_response(200, [
-                {
-                    'title':msg.title,
-                    'url':msg.url,
-                    'time':msg.time
-                }
-                for msg in Articles.objects.all().order_by('time')[length-50:]
-            ])
+            {
+                'title':msg.title,
+                'url':msg.url,
+                'time':msg.time
+            }
+            for msg in Articles.objects.all().order_by('time')[length-50:]
+        ])
         return response
 
-def GetWordcloud(request,cluster_id,topk):  ###词云API
+def GetWordcloud(request,cluster_id,topk):  # 词云API
     if request.method == 'GET':
         dic=wordcloud(cluster_id,topk)
         return gen_response(200,dic)
-
 
 def GetTimeline(request, keyword, starttime, endtime):
     if request.method == 'GET':
@@ -89,31 +89,31 @@ def searchNewsWithElasticsearch(q, time_from, time_to, from_index=0, size=10):
 
     if time_from and time_to:
         q_range = {
-                "range": {
-                    "time": {
-                        "gt": time_from,
-                        "lte": time_to
-                        }
-                    }
+            "range": {
+                "time": {
+                    "gt": time_from,
+                    "lte": time_to
                 }
+            }
+        }
         q_body["query"]["bool"]["must"].append(q_range)
     elif time_from:
         q_range = {
-                "range": {
-                    "time": {
-                        "gt": time_from,
-                        }
-                    }
+            "range": {
+                "time": {
+                    "gt": time_from,
                 }
+            }
+        }
         q_body["query"]["bool"]["must"].append(q_range)
     elif time_to:
         q_range = {
-                "range": {
-                    "time": {
-                        "lte": time_to
-                        }
-                    }
+            "range": {
+                "time": {
+                    "lte": time_to
                 }
+            }
+        }
         q_body["query"]["bool"]["must"].append(q_range)
 
     es = Elasticsearch()
@@ -132,7 +132,15 @@ def searchNewsWithHeatmap(request):
         time_from = request.GET.get('from')
         time_to = request.GET.get('to')
 
-    response = searchNewsWithElasticsearch(q, time_from, time_to, 0, 10000)
+    try:
+        response = searchNewsWithElasticsearch(q, time_from, time_to, 0, 10000)
+    except Exception as e:
+        if isinstance(e, elasticsearch_excaptions.ConnectionError):
+            res = gen_response(400, {'error': "No Elasticsearch"})
+        else:
+            print(type(e))
+            res = gen_response(400, {'error': str(e)})
+        return res
 
     hits_id = []
     for item in response['hits']['hits']:
@@ -148,16 +156,34 @@ def searchNews(request):
         time_to = request.GET.get('to')
         start_index = int(request.GET.get('start_index', default='0'))
 
-    response = searchNewsWithElasticsearch(q, time_from, time_to, start_index, 10)
-
-    res = gen_response(200, response['hits'])
+    try:
+        response = searchNewsWithElasticsearch(q, time_from, time_to, start_index, 10)
+    except Exception as e:
+        if isinstance(e, elasticsearch_excaptions.ConnectionError):
+            res = gen_response(400, {'error': "No Elasticsearch"})
+        else:
+            print(type(e))
+            res = gen_response(400, {'error': str(e)})
+    else:
+        res = gen_response(200, response['hits'])
+    finally:
+        pass
     return res
+
 
 def search_date_cluster_info(request):
     if request.method == 'GET':
         q = request.GET.get('q', default='a')
 
-    response = searchNewsWithElasticsearch(q, None, None, 0, 10000)
+    try:
+        response = searchNewsWithElasticsearch(q, None, None, 0, 10000)
+    except Exception as e:
+        if isinstance(e, elasticsearch_excaptions.ConnectionError):
+            res = gen_response(400, {'error': "No Elasticsearch"})
+        else:
+            print(type(e))
+            res = gen_response(400, {'error': str(e)})
+        return res
 
     date_num_cluster_keyword = {}
 
