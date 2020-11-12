@@ -2,19 +2,17 @@
 
 import time
 import requests
-from news.re_funcs import re_finditer, re_sub
 import sys
-import os
-import django
+sys.path.append("/home/ubuntu/xxswl-backend/")
+sys.path.append("/home/ubuntu/wzh/xxswl-backend/")
+sys.path.append("D:\\Program Files\\PycharmProjects\\xxswl-backend")
+from news.re_funcs import re_finditer, re_sub
+import os,django
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "xxswl.settings")# project_name 项目名称
+django.setup()
 from news.models import Articles
 from news.models import WeiboHot
 from news.models import WeiboSocialEvents
-
-sys.path.append("/home/ubuntu/backend/xxswl-backend/")
-print(sys.path)
-
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "xxswl.settings")  # project_name 项目名称
-django.setup()
 
 
 def crawler_weibo_hot():

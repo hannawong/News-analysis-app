@@ -43,7 +43,7 @@ class TestMeetingEndpoint(TestCase):
                     'url': msg.url,
                     'time': msg.time
                 }
-                for msg in Articles.objects.all().order_by('time')[length - 50:]
+                for msg in Articles.objects.all().order_by('time')[length - 50:length]
             ]
         response = self.client.get("/news/index2")
         print(response.json()['data'])
