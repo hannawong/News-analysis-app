@@ -75,7 +75,7 @@ def Event(id):
         print(times[i])
         ans_list.append({"time":times[i], "title":titles[i], "body":bodys[i]})
     return ans_list
-Event(5697)
+#Event(5697)
 
 stopwords=["责任编辑","这个","今日","万","亿","一","二","三","四","五","六","七","八","九","十","应当","京报","日","月","就是","因为","自己","现在"]
 def stop(str):
