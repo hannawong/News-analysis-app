@@ -7,7 +7,7 @@ import json
 
 import sys
 sys.path.append("D:\\Program Files\\PycharmProjects\\xxswl-backend")
-sys.path.append("/home/ubuntu/xxswl-backend/")
+sys.path.append("/home/ubuntu/wzh/xxswl-backend/")
 import os,django
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "xxswl.settings")# project_name 项目名称
 django.setup()
@@ -33,8 +33,6 @@ for article in sina_rollnews:
                 dic_word[word] += 1
             else:
                 dic_word[word] = 1
-        print(tot_word)
-        print(dic_word)
         for word in set(seg_word):
             if(word in IDF_doc_word.keys()):
                 IDF_doc_word[word] += 1

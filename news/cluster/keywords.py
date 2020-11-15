@@ -8,7 +8,7 @@ import json
 
 
 import sys
-sys.path.append("/home/ubuntu/xxswl-backend/")
+sys.path.append("/home/ubuntu/wzh/xxswl-backend/")
 sys.path.append("D:\\Program Files\\PycharmProjects\\xxswl-backend")
 import os,django
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "xxswl.settings")# project_name 项目名称
@@ -36,8 +36,6 @@ for article in sina_rollnews:
                 dic_word[word]+=1
             else:
                 dic_word[word]=1
-        print(tot_word)
-        print(dic_word)
         tf_idf_dic={}
         for word in dic_word:
             tf_idf=dic_word[word]/tot_word * numpy.log10(doc_num/IDF_doc_word[word])

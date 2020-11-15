@@ -5,7 +5,7 @@ import re
 import jieba
 from .models import Articles,WeiboHot,WeiboSocialEvents
 from django.core.exceptions import ValidationError
-from news.inverted_index.search import wordcloud, search
+from news.inverted_index.search import wordcloud, search, Event
 from elasticsearch import Elasticsearch
 from elasticsearch import exceptions as elasticsearch_excaptions
 from heatmap.dataGenerator import data_generator_ids
@@ -68,6 +68,15 @@ def GetTimeline(request, keyword, starttime, endtime):
     if request.method == 'GET':
         news_list=search(keyword, starttime, endtime)
         return gen_response(200,news_list)
+
+def GetEventTimeline(request,id):
+    if request.method == 'GET':
+        news_list=Event(id)
+        return gen_response(200,news_list)
+
+
+
+
 
 def searchNewsWithElasticsearch(q, time_from, time_to, from_index=0, size=10):
     q_body = {

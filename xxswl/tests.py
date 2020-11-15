@@ -34,22 +34,7 @@ class TestMeetingEndpoint(TestCase):
         print(response.json()['data'])
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json()['data'], response_data)
-'''
-    def test_get_latest_news(self):
-        length = len(Articles.objects.all())
-        response_data = [
-                {
-                    'title': msg.title,
-                    'url': msg.url,
-                    'time': msg.time
-                }
-                for msg in Articles.objects.all().order_by('time')[length - 50:length]
-            ]
-        response = self.client.get("/news/index2")
-        print(response.json()['data'])
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.json()['data'], response_data)
-'''
+
     def test_get_timeline(self):
         news_list = search("疫情", 0, 9999999999999999)
         response = self.client.get("/news/timeline/疫情/0/9999999999999999")
@@ -61,3 +46,20 @@ class TestMeetingEndpoint(TestCase):
        self.assertEqual(response.status_code,200)
        dic=wordcloud(2,5)
        self.assertEqual(response.json()['data'], dic)
+
+    '''
+        def test_get_latest_news(self):
+            length = len(Articles.objects.all())
+            response_data = [
+                    {
+                        'title': msg.title,
+                        'url': msg.url,
+                        'time': msg.time
+                    }
+                    for msg in Articles.objects.all().order_by('time')[length - 50:length]
+                ]
+            response = self.client.get("/news/index2")
+            print(response.json()['data'])
+            self.assertEqual(response.status_code, 200)
+            self.assertEqual(response.json()['data'], response_data)
+    '''

@@ -2,6 +2,9 @@ import json
 import time
 import sys
 import numpy
+import pandas as pd
+sys.path.append("/home/ubuntu/wzh/xxswl-backend/")
+sys.path.append("D:\\Program Files\\PycharmProjects\\xxswl-backend")
 sys.path.append("/home/ubuntu/xxswl-backend/")
 import os,django
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "xxswl.settings")# project_name 项目名称
@@ -10,8 +13,8 @@ django.setup()
 
 from news.models import Articles
 
-f=open("news/inverted_index/inverted_index_cluster.json",'r',encoding="utf-8")
-f1=open("news/inverted_index/inverted_index_article.json",'r',encoding="utf-8")
+f=open("news\inverted_index\inverted_index_cluster.json",'r',encoding="utf-8")
+f1=open("news\inverted_index\inverted_index_article.json",'r',encoding="utf-8")
 inverted_index_cluster=json.load(f)
 inverted_index_article=json.load(f1)
 
@@ -49,7 +52,30 @@ def search(keyword: str, starttime,endtime):
     return ans_list
 
 #anslist=search("新冠",0,16028635350000)
-
+def Event(id):
+    time_list = []
+    title_list = []
+    body_list = []
+    article = Articles.objects.filter(id=id)[0]
+    sim_docs = article.similar_docs.split(",")
+    print(sim_docs)
+    for doc_id in sim_docs[:-1]:
+        doc = Articles.objects.filter(id=doc_id)[0]
+        time_list.append(to_timestamp(doc.time))
+        title_list.append(doc.title)
+        body_list.append(doc.body)
+    df=pd.DataFrame({"time":time_list,"title":title_list,"body":body_list})
+    df=df.sort_values(by="time")
+    df=df.drop_duplicates(subset=["title"])
+    titles=list(df["title"])
+    times=list(df["time"])
+    bodys=list(df["body"])
+    ans_list=[]
+    for i in range(len(titles)):
+        print(times[i])
+        ans_list.append({"time":times[i], "title":titles[i], "body":bodys[i]})
+    return ans_list
+Event(5697)
 
 stopwords=["责任编辑","这个","今日","万","亿","一","二","三","四","五","六","七","八","九","十","应当","京报","日","月","就是","因为","自己","现在"]
 def stop(str):
