@@ -13,8 +13,8 @@ django.setup()
 
 from news.models import Articles
 
-f=open("news\inverted_index\inverted_index_cluster.json",'r',encoding="utf-8")
-f1=open("news\inverted_index\inverted_index_article.json",'r',encoding="utf-8")
+f=open("news/inverted_index/inverted_index_cluster.json",'r',encoding="utf-8")
+f1=open("news/inverted_index/inverted_index_article.json",'r',encoding="utf-8")
 inverted_index_cluster=json.load(f)
 inverted_index_article=json.load(f1)
 
