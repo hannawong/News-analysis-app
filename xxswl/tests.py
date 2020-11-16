@@ -40,11 +40,6 @@ class TestMeetingEndpoint(TestCase):
         response = self.client.get("/news/timeline/疫情/0/9999999999999999")
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json()['data'], news_list)
-    def test_get_event_timeline(self):
-        news_list=Event(5714)
-        response=self.client.get("/news/event_timeline/5714")
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.json()['data'], news_list)
 
     def test_get_wordcloud(self):
        response = self.client.get("/news/wordcloud/2/5")
@@ -52,6 +47,13 @@ class TestMeetingEndpoint(TestCase):
        dic=wordcloud(2,5)
        self.assertEqual(response.json()['data'], dic)
 
+    '''
+        def test_get_event_timeline(self):
+            news_list=Event(5714)
+            response=self.client.get("/news/event_timeline/5714")
+            self.assertEqual(response.status_code, 200)
+            self.assertEqual(response.json()['data'], news_list)
+    '''
     '''
         def test_get_latest_news(self):
             length = len(Articles.objects.all())
