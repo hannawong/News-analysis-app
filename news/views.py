@@ -75,9 +75,6 @@ def GetEventTimeline(request,id):
         return gen_response(200,news_list)
 
 
-
-
-
 def searchNewsWithElasticsearch(q, time_from, time_to, from_index=0, size=10):
     q_body = {
         "query":{

@@ -4,7 +4,7 @@ import re,jieba
 
 from news.models import Articles,WeiboHot,WeiboSocialEvents
 from news.inverted_index.search import wordcloud
-from news.inverted_index.search import search
+from news.inverted_index.search import search, Event
 class TestMeetingEndpoint(TestCase):
     def test_get_weibohot(self):
         response_data = [
@@ -38,6 +38,11 @@ class TestMeetingEndpoint(TestCase):
     def test_get_timeline(self):
         news_list = search("疫情", 0, 9999999999999999)
         response = self.client.get("/news/timeline/疫情/0/9999999999999999")
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json()['data'], news_list)
+    def test_get_event_timeline(self):
+        news_list=Event(5714)
+        response=self.client.get("/news/event_timeline/5714")
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json()['data'], news_list)
 
