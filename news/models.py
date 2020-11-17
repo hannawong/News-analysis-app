@@ -8,7 +8,7 @@ class Articles(models.Model):
     body=models.CharField(max_length=1000)
     keywords=models.CharField(max_length=300,default="null")  # 地点筛选后may存下来，@ 分割，记在后方 因为聚类可能会变化
     cluster_id=models.IntegerField(default=-1)
-    similar_docs=models.CharField(max_length=200,default="")
+    similar_docs=models.CharField(max_length=200,default="null")
     emotion=models.FloatField(default=0.0)
 
 

@@ -69,9 +69,9 @@ def GetTimeline(request, keyword, starttime, endtime):
         news_list=search(keyword, starttime, endtime)
         return gen_response(200,news_list)
 
-def GetEventTimeline(request,id):
+def GetEventTimeline(request,id,starttime,endtime):
     if request.method == 'GET':
-        news_list=Event(id)
+        news_list=Event(id,starttime,endtime)
         return gen_response(200,news_list)
 
 

@@ -52,7 +52,9 @@ def search(keyword: str, starttime,endtime):
     return ans_list
 
 #anslist=search("新冠",0,16028635350000)
-def Event(id):
+def Event(id,starttime,endtime):
+    starttime = int(starttime)
+    endtime = int(endtime)
     time_list = []
     title_list = []
     body_list = []
@@ -61,9 +63,11 @@ def Event(id):
     print(sim_docs)
     for doc_id in sim_docs[:-1]:
         doc = Articles.objects.filter(id=doc_id)[0]
-        time_list.append(to_timestamp(doc.time))
-        title_list.append(doc.title)
-        body_list.append(doc.body)
+        print(starttime,to_timestamp(doc.time))
+        if starttime < to_timestamp(doc.time) and to_timestamp(doc.time) < endtime:
+            time_list.append(to_timestamp(doc.time))
+            title_list.append(doc.title)
+            body_list.append(doc.body)
     df=pd.DataFrame({"time":time_list,"title":title_list,"body":body_list})
     df=df.sort_values(by="time")
     df=df.drop_duplicates(subset=["title"])
@@ -75,7 +79,7 @@ def Event(id):
         print(times[i])
         ans_list.append({"time":times[i], "title":titles[i], "body":bodys[i]})
     return ans_list
-#Event(5697)
+#print(Event(5697,0,1605258480))
 
 stopwords=["责任编辑","这个","今日","万","亿","一","二","三","四","五","六","七","八","九","十","应当","京报","日","月","就是","因为","自己","现在"]
 def stop(str):
