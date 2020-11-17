@@ -123,6 +123,7 @@ def news_crawler():
                 news.publish_id = publish_id
                 news.body = body
                 doc_num += 1
+                news.similar_docs = "null!"
                 news.save()
                 print("done")
 

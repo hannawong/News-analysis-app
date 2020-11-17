@@ -1,3 +1,4 @@
 
 1.在服务器上运行webcrawler.py
 2. 服务器运行IDF_dic.py, keywords.py, first_cluster.py 得到有关键词、有聚类结果的db文件。
+3. 运行similarity.py
