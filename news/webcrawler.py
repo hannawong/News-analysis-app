@@ -127,10 +127,8 @@ def news_crawler():
                 news.save()
                 print("done")
 
-
+'''
 while(1):
     news_crawler()
     time.sleep(60)
-
-sina_rollnews = Articles.objects.filter().values("title").distinct()
-print(len(sina_rollnews))
+'''
